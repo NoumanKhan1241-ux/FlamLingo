@@ -87,7 +87,7 @@ const main = async () => {
                 lessonId: 1,   //nouns
                 order: 1,
                 type: "SELECT",
-                question: 'Which one of these is"the man"/',
+                question: 'Which one of these is"the man"?',
             },
             
         ]);
