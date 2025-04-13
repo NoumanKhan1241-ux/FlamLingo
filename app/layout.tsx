@@ -1,8 +1,18 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import {
+/*  SignInButton,
+  SignUpButton, */
+  SignedIn,
+  SignedOut,
+  UserButton,
+} from '@clerk/nextjs'
+import { Nunito, Geist_Mono } from "next/font/google";
+import { ClerkProvider } from "@clerk/nextjs"
+import { Toaster } from "@/components/ui/sonner";
 import "./globals.css";
+import Image from 'next/image';
 
-const geistSans = Geist({
+const font = Nunito({
   variable: "--font-geist-sans",
   subsets: ["latin"],
 });
@@ -23,12 +33,25 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
+      <ClerkProvider> 
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${font.variable} ${geistMono.variable} antialiased`}
       >
+        <Toaster />
+
+      <header className="flex justify-end items-center p-4 gap-4 h-16">
+      <SignedOut>
+       
+      </SignedOut>
+      <SignedIn>
+        <UserButton />
+      </SignedIn>
+    </header>
         {children}
       </body>
     </html>
+    </ClerkProvider>
   );
+  
 }
