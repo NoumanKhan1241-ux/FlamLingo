@@ -21,7 +21,7 @@ return(
        )}>
      <Link href="/learn">
      <div className="pt-8 pl-4 pb-7 flex items-center gap-x-3"> 
-                        <Image  src="/logo2.svg" height={50} width={50} alt="logo" />
+                        <Image  src="/flamingo_logo_bg.png" height={50} width={50} alt="logo" />
                         <h1 className=" text-2xl font-extrabold text-green-600 tracking-wide">
                             FlamLingo
                         </h1>

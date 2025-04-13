@@ -16,7 +16,7 @@ export const Header = () => {
         <header className="h-10 w-full border-b-2 border-slate-200 px-4">
             <div className="lg:max-w-screen-lg mx-auto flex items-center justify-between h-full">
                 <div className="pt-8 pl-4 pb-7 flex items-center gap-x-3"> 
-                    <Image className='cursor-pointer ' src="/logo2.svg" height={50} width={50} alt="logo" />
+                    <Image className='cursor-pointer ' src="/flamingo_logo_bg.png" height={25} width={30} alt="logo" />
                     <h1 className="cursor-pointer text-2xl font-extrabold text-green-600 tracking-wide">
                         FlamLingo
                     </h1>

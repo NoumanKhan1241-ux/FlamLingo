@@ -9,6 +9,7 @@ import {
 import { Nunito, Geist_Mono } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs"
 import { Toaster } from "@/components/ui/sonner";
+import { ExitModal } from "@/components/modals/exit-modal";
 import "./globals.css";
 import Image from 'next/image';
 
@@ -36,18 +37,11 @@ export default function RootLayout({
       <ClerkProvider> 
     <html lang="en">
       <body
-        className={`${font.variable} ${geistMono.variable} antialiased`}
+        className={font.className}
       >
         <Toaster />
-
-      <header className="flex justify-end items-center p-4 gap-4 h-16">
-      <SignedOut>
-       
-      </SignedOut>
-      <SignedIn>
-        <UserButton />
-      </SignedIn>
-    </header>
+      <ExitModal
+      />
         {children}
       </body>
     </html>
