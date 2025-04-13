@@ -26,15 +26,99 @@ const main = async () => {
                 imageSrc: "/pashtoflag.png",
 
             },
-
             {
-                id: 2,
-                title: "Sindhi",
-                imageSrc: "/sindhiflag.png",
-
+               id:2,
+               title: "Sindhi",
+               imageSrc: "/sindhiflag.png",
             },
 
+            
 
+        ]);
+
+        await db.insert(schema.units).values([
+            {
+                id: 1,  //pashto
+                courseId: 1,
+                title: "Unit 1",
+                description: "Learn the basics of Pashto",
+                order: 1,
+            }
+        ]);
+
+        await db.insert(schema.lessons).values([
+
+            {
+                id: 1, //pashto
+                unitId: 1,        // unit 1
+                order: 1,
+                title: "Nouns",
+            },
+            {
+                id: 2, //pashto
+                unitId: 1,        // unit 1
+                order: 2,
+                title: "Verbs",
+            },
+            {
+                id: 3, //pashto
+                unitId: 1,        // unit 1
+                order: 3,
+                title: "Nouns",
+            },
+            {
+                id: 4, //pashto
+                unitId: 1,        // unit 1
+                order: 4,
+                title: "Nouns",
+            },
+            {
+                id: 5, //pashto
+                unitId: 1,        // unit 1
+                order: 5,
+                title: "Nouns",
+            },
+            
+        ]);
+
+        await db.insert(schema.challenges).values([
+            {
+                id: 1, //pashto
+                lessonId: 1,   //nouns
+                order: 1,
+                type: "SELECT",
+                question: 'Which one of these is"the man"/',
+            },
+            
+        ]);
+
+        await db.insert(schema.challengeOptions).values([
+            {
+                id: 1,
+                challengeId: 1, //which one of these is the man
+                imageSrc: "/man.png",
+                correct: true,
+                text: "سړی",
+                audioSrc: "/pashto_man.mp3",
+            },
+            {
+                id: 2,
+                challengeId: 1, //which one of these is the man
+                imageSrc: "/woman.png",
+                correct: false,
+                text: "ښځه",
+                audioSrc: "/pashto_woman.mp3",
+            },
+            {
+                id: 3,
+                challengeId: 1, //which one of these is the man
+                imageSrc: "/robot.png",
+                correct: false,
+                text: "روبوټ",
+                audioSrc: "/pashto_robot.mp3",
+            },
+            
+            
         ]);
 
 
