@@ -1,6 +1,6 @@
 "use server";
 
-import { auth, currentUser } from "@clerk/nextjs";
+import { auth, currentUser } from "@clerk/nextjs/server";
 
 import {stripe} from "@/lib/stripe";
 
@@ -9,7 +9,7 @@ import { getUserSubscription } from "@/db/queries";
 
 const returnUrl = absoluteUrl("/shop"); // http://localhost:3000/shop
 export const  createStripeUrl = async () => {
-  const {userId} = await auth();
+  const { userId } = await auth();
   const user = await currentUser();
   if(!userId || !user) {
     throw new Error("Unauthorized")

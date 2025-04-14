@@ -85,7 +85,7 @@ export const challengeOptionsRelations = relations(challengeOptions, ({ one}) =>
 
 export const challengeProgress = pgTable("challenge_progress",{
     id: serial("id").primaryKey(),
-    userId: text("user_id").notNull(),  //TODO: confirm it doesn't break.
+    userId: text("user_id").notNull(), 
    challengeId: integer("challenge_id").references(() => challenges.id, {onDelete: "cascade"}).notNull(),
    completed: boolean("completed").notNull().default(false), //1,2,3,4,5,6,7,8,9,10 
 });

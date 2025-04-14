@@ -34,17 +34,19 @@ export const Items = ({
           .catch(() => toast.error("something went wrong"));
 
         });
-        const onUpgrade () =>{
-            startTransition(() =>{
-                createStripeUrl().then((response) =>{
-                    if(response.data){
+    }
+
+    const onUpgrade = () => {
+        startTransition(() => {
+            createStripeUrl()
+                .then((response) => {
+                    if (response.data) {
                         window.location.href = response.data;
                     }
-                }).catch(() => toast.error("Something went wrong"));
-                
-            });
-        };
-    }
+                })
+                .catch(() => toast.error("Something went wrong"));
+        });
+    };
     return(
     <ul className="w-full">
         <div className="flex items-center w-full gap-x-4  border-t-2">
@@ -99,9 +101,9 @@ export const Items = ({
             </div>
             <Button
             onClick={onUpgrade}
-            disabled={pending || hasActiveSubscription}
+            disabled={pending }
             >
-                {hasActiveSubscription ? "active" : "upgrade"}
+                {hasActiveSubscription ? "settings" : "upgrade"}
             </Button>
         </div>
     </ul>

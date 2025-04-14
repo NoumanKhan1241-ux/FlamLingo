@@ -1,7 +1,7 @@
 "use client";
 import { useState, useTransition } from "react";
 
-import { challengeOptions, challenges } from "@/db/schema";
+import { challengeOptions, challenges, userSubscription } from "@/db/schema";
 import { useAudio, useWindowSize, useMount } from "react-use";
 import Confetti from "react-confetti";
 import { useHeartsModal } from "@/store/use-hearts-modal";
@@ -26,7 +26,9 @@ type Props = {
     completed: boolean;
     challengeOptions: typeof challengeOptions.$inferSelect[];
   })[];
-  userSubscription: any;
+  userSubscription: typeof userSubscription.$inferSelect & {
+    isActive: boolean;
+  } | null;
 };
 
 export const Quiz = ({
