@@ -16,7 +16,15 @@ export const List = ({courses, activeCourseId}: Props) =>{
     const [pending, startTransition] = useTransition();
 
     const onClick = (id: number) => {
-        if(pending) return;
+        if (pending) return;
+
+        // Check if the course ID exists in the list
+        const courseExists = courses.some((course) => course.id === id);
+
+        if (!courseExists) {
+            toast.error("Something went wrong. Course not found.");
+            return;
+        }
 
         if(id === activeCourseId) {
             return router.push("/learn")
@@ -40,8 +48,6 @@ export const List = ({courses, activeCourseId}: Props) =>{
                 disabled={pending}
                 active={course.id===activeCourseId}
                 />
-
-
             ))}
         </div>
     );

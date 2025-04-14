@@ -6,6 +6,8 @@ import { FeedWrapper } from "@/components/feed-wrapper";
 import Image from "next/image";
 import { Items } from "./items";
 import { userSubscription } from "@/db/schema";
+import { Promo } from "@/components/promo";
+import { Quests } from "@/components/quests";
 
 const ShopPage = async () => {
 
@@ -35,6 +37,11 @@ const ShopPage = async () => {
                 points={userProgress.points}
                 hasActiveSubscription={isPro}
                 />
+                {!isPro && (
+                            <Promo />
+                 )}
+                <Quests points = {userProgress.points} />
+                 
                 
             </StickyWrapper>
             <FeedWrapper>

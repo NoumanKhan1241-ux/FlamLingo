@@ -6,30 +6,9 @@ import { FeedWrapper } from "@/components/feed-wrapper";
 import Image from "next/image";
 import { userSubscription } from "@/db/schema";
 import { Progress } from "@/components/ui/progress";
+import { Promo } from "@/components/promo";
+import { quests } from "@/constants";
 
-const quests = [
-    {
-        title: "Earn 20 XP",
-        value: 20,
-    },
-    {
-        title: "Earn 50 XP",
-        value: 50,
-    },
-    {
-        title: "Earn 100 XP",
-        value: 100,
-    },
-    {
-        title: "Earn 200 XP",
-        value: 200,
-    },
-    {
-        title: "Earn 500 XP",
-        value: 500,
-    },
-    
-];
 
 
 const QuestsPage = async () => {
@@ -61,6 +40,9 @@ const QuestsPage = async () => {
                 points={userProgress.points}
                 hasActiveSubscription={isPro}
                 />
+                {!isPro && (
+                            <Promo />
+                         )}
                 
             </StickyWrapper>
             <FeedWrapper>
@@ -81,7 +63,6 @@ const QuestsPage = async () => {
                  <ul className="w-full ">
                    {quests.map((quest) =>{
                       const progress = (userProgress.points / quest.value) * 100; 
-                      console.log ({progress, value: quest.value})
                       return(
                         <div
                         className="flex items-center w-full p-4 gap-x-4 border-t-2"
