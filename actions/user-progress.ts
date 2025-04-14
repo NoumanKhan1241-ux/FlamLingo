@@ -1,6 +1,7 @@
 "use server";
 
 
+import { POINTS_TO_REFILL } from "@/constants";
 import db from "@/db/drizzle";
 import { getCourseById, getUserProgress, getUserSubscription } from "@/db/queries";
 import { challengeProgress, challenges, userProgress } from "@/db/schema";
@@ -10,7 +11,6 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 
-const POINTS_TO_REFILL = 10;
 
 export const upsertUserProgress = async (courseId: number) =>{
     const {userId} = await auth();
@@ -27,7 +27,7 @@ export const upsertUserProgress = async (courseId: number) =>{
     }
     
      
-   //TODO: Enable once courses and lessons are added 
+  
     if (!course.units.length || !course.units[0].lessons.length) {
         throw new Error("Course is empty");
     }
