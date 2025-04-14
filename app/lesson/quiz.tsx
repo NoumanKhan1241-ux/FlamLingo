@@ -2,14 +2,16 @@
 import { useState, useTransition } from "react";
 
 import { challengeOptions, challenges } from "@/db/schema";
-import { useAudio, useWindowSize } from "react-use";
+import { useAudio, useWindowSize, useMount } from "react-use";
 import Confetti from "react-confetti";
+import { useHeartsModal } from "@/store/use-hearts-modal";
 import Image from "next/image";
 
 import { Header } from "./header";
 import { QuestionBubble } from "./question-bubble";
 import { Challenge } from "./challenge";
 import { Footer } from "./footer";
+import { usePracticeModal } from "@/store/use-practice-modal";
 import { upsertChallengeProgress } from "@/actions/challenge-progress";
 import { toast } from "sonner";
 import { reducedHearts } from "@/actions/user-progress";
@@ -34,7 +36,17 @@ export const Quiz = ({
   initialLesssonChallenges,
   userSubscription,
 }: Props) => {
+
+  const {open: openHeartsModal} = useHeartsModal();
+  const {open: openPracticeModal} = usePracticeModal();
+
+  useMount(() => {
+    if(initialPercentage === 100){
+        openPracticeModal();
+    }
+  })
   const { width, height } = useWindowSize();
+
   const router = useRouter();
 
   const [finishAudio] = useAudio({ src: "/success.mp3", autoPlay: true });
@@ -48,7 +60,9 @@ export const Quiz = ({
   const [pending, startTransition] = useTransition();
   const [lessonId] = useState(initialLessonId);
   const [hearts, setHearts] = useState(initialHearts);
-  const [percentage, setPercentage] = useState(initialPercentage);
+  const [percentage, setPercentage] = useState(() => {
+    return initialPercentage === 100 ? 0 : initialPercentage;
+  });
   const [challenges] = useState(initialLesssonChallenges);
   const [activeIndex, setActiveIndex] = useState(() => {
     const uncompletedIndex = challenges.findIndex(
@@ -97,7 +111,7 @@ export const Quiz = ({
         upsertChallengeProgress(challenge.id)
           .then((response) => {
             if (response?.error === "hearts") {
-              console.error("Missing Hearts!");
+              openHeartsModal();
               return;
             }
 
@@ -118,7 +132,7 @@ export const Quiz = ({
         reducedHearts(challenge.id)
           .then((response) => {
             if (response?.error === "hearts") {
-              console.error("Missing Hearts!");
+              openHeartsModal();
               return;
             }
 
@@ -136,7 +150,6 @@ export const Quiz = ({
     }
   };
 
-  // TODO: remove true
   if ( !challenge) {
     return (
       <>

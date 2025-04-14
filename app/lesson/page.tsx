@@ -26,18 +26,10 @@ const LessonPage = async () => {
     return (
         <Quiz 
         initialLessonId={lesson.id}
-        initialLesssonChallenges={lesson.challenges.map(({ id, order, lessonId, type, question, completed, challengeOptions }) => ({
-            id,
-            order,
-            lessonId,
-            type,
-            question,
-            completed,
-            challengeOptions,
-        }))}
+        initialLesssonChallenges={lesson.challenges}
         initialHearts={userProgress.hearts}
         initialPercentage={initialPercentage}
-        userSubscription={null}
+        userSubscription={null}   //TODO: Add user subscription
         />
 
         
