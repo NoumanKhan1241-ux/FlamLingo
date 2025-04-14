@@ -25,7 +25,7 @@ export const UnitBanner = ({ title, description }: Props) => {
             <Button
             size="lg"
             variant="secondary"
-            className="hidden xl:flex border-2 border-b-4 active: border-b-2"
+            className="hidden xl:flex border-2 border-b-4 active:"
 
             >
                <NotebookText  className="mr-2"/> 
