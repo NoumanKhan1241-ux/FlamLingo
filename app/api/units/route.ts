@@ -1,44 +1,25 @@
 import db from "@/db/drizzle";
 import { units } from "@/db/schema";
 import { getIsAdmin } from "@/lib/admin";
-import { eq } from "drizzle-orm";
 import { NextResponse } from "next/server";
 
-export const GET = async (
-    req: Request,
-    {params} : {params: { unitId: number }},
-) => {
+export const GET = async () => {
     if(!getIsAdmin()) {
         return new NextResponse("Unauthorized", {status: 403});
     }
-  const data = await db.query.units.findFirst({
-    where: eq(units.id, params.unitId),
-  });
+  const data = await db.query.units.findMany();
 
   return NextResponse.json(data);
 };
-export const PUT = async (
-  req: Request,
-  {params} : {params: { unitId: number }},
-) => {
+export const POST = async (
+  req: Request) => {
   if(!getIsAdmin()) {
       return new NextResponse("Unauthorized", {status: 403});
   }
   const body = await req.json();
-const data = await db.update(units).set({
+const data = await db.insert(units).values({
   ...body,
-}).where(eq(units.id, params.unitId)).returning();
-
-return NextResponse.json(data);
-};
-export const DELETE = async (
-  req: Request,
-  {params} : {params: { unitId: number }},
-) => {
-  if(!getIsAdmin()) {
-      return new NextResponse("Unauthorized", {status: 403});
-  }
-const data = await db.delete(units).where(eq(units.id, params.unitId)).returning();
+}).returning();
 
 return NextResponse.json(data[0]);
 };
