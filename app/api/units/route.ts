@@ -1,10 +1,10 @@
-// app/api/courses/route.ts
+// app/api/units/route.ts
 import { NextResponse } from "next/server";
 import db from "@/db/drizzle";
-import { courses } from "@/db/schema";
+import { units } from "@/db/schema";
 import { getIsAdmin } from "@/lib/admin";
 
-// GET: Fetch all courses
+// GET: Fetch all units
 export const GET = async () => {
   const isAdmin = await getIsAdmin();
   if (!isAdmin) {
@@ -13,10 +13,10 @@ export const GET = async () => {
   }
 
   try {
-    const data = await db.query.courses.findMany();
+    const data = await db.query.units.findMany();
     return NextResponse.json(data);
   } catch (error) {
-    console.error("Error fetching courses:", error);
+    console.error("Error fetching units:", error);
     return new NextResponse("Internal Server Error", { status: 500 });
   }
 };
@@ -38,7 +38,7 @@ export const POST = async (req: Request) => {
       return new NextResponse("Missing required fields", { status: 400 });
     }
 
-    const data = await db.insert(courses).values({
+    const data = await db.insert(units).values({
       ...body,
     }).returning();
 

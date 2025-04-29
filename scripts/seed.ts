@@ -188,22 +188,97 @@ const main = async () => {
                 lessonId: 2,   //verbs
                 type: "SELECT",
                 order: 1,
-                question: 'Which one of these is"the man"?',
+                question: 'Which one of them is"Running"?',
             },
             {
                 id: 5, //pashto
                 lessonId: 2,   //verbs
                 type: "ASSIST",
                 order: 2,
-                question: '"the man"',
+                question: '"Drinking water"',
             },
             {
                 id: 6, //pashto
                 lessonId: 2,   //verbs
                 type: "SELECT",
                 order: 3,
-                question: 'Which one of these is"the robot"?',
+                question: 'Which one of these is" not driving"?',
             },
+            
+        ]);
+        await db.insert(schema.challengeOptions).values([
+            {
+                challengeId: 4, //which one of them is Running
+                imageSrc: "/driving_1.png",
+                correct: false,
+                text: "موټر چلول",
+                audioSrc: "/pashto_driving.mp3",
+            },
+            {
+                challengeId: 4, //which one of them is Running
+                imageSrc: "/running.png",
+                correct: true,
+                text: "منډه",
+                audioSrc: "/pashto_running.mp3",
+            },
+            {
+                challengeId: 4, //which one of them is Running
+                imageSrc: "/cycling.png",
+                correct: false,
+                text: "سایکل چلول",
+                audioSrc: "/cycling_pashto.mp3",
+            },
+            
+            
+        ]);
+
+        await db.insert(schema.challengeOptions).values([
+            {
+                challengeId: 5, // drinking water
+                correct: true,
+                text: "اوبه څکل",
+                audioSrc: "/pashto_drinking_water.mp3",
+            },
+            {
+                challengeId: 5, // drinking water
+                correct: false,
+                text: "منډه",
+                audioSrc: "/pashto_running.mp3",
+            },
+            {
+                challengeId: 5, // drinking water
+                correct: false,
+                text: "موټر چلول",
+                audioSrc: "/pashto_driving.mp3",
+            },
+            
+            
+            
+        ]);
+
+        await db.insert(schema.challengeOptions).values([
+            {
+                challengeId: 6, //which one of these is not driving
+                imageSrc: "/driving_1.png",
+                correct: false,
+                text: "موټر چلول",
+                audioSrc: "/pashto_driving.mp3",
+            },
+            {
+                challengeId: 6, //which one of these is not driving
+                imageSrc: "/driving_2.png",
+                correct: false,
+                text: "موټر چلول",
+                audioSrc: "/pashto_driving.mp3",
+            },
+            {
+                challengeId: 6, //which one of these is not driving
+                imageSrc: "/cycling.png",
+                correct: true,
+                text: "سایکل چلول",
+                audioSrc: "/pashto_cycling.mp3",
+            },
+            
             
         ]);
         

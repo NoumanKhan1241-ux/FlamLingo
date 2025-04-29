@@ -1,6 +1,7 @@
+// app/admin/page.tsx
 import { getIsAdmin } from "@/lib/admin";
 import { redirect } from "next/navigation";
-import AdminWrapper from "./AdminWrapper"; // <-- new wrapper (client)
+import AdminClientWrapper from "./AdminClientWrapper";
 
 export default async function AdminPage() {
   const isAdmin = await getIsAdmin();
@@ -9,5 +10,5 @@ export default async function AdminPage() {
     redirect("/");
   }
 
-  return <AdminWrapper />;
+  return <AdminClientWrapper />;
 }

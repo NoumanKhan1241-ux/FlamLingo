@@ -30,7 +30,7 @@ const data = await db.update(courses).set({
 }).where(eq(courses.id, params.courseId)).returning();
 
 
-return NextResponse.json(data);
+return NextResponse.json(data[0]);
 
 };
 
@@ -44,6 +44,6 @@ if(!getIsAdmin()){
 
 const data = await db.delete(courses).where(eq(courses.id, params.courseId)).returning();
 
-return NextResponse.json(data);
+return NextResponse.json(data[0]);
 
 };

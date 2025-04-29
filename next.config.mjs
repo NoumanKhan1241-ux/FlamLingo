@@ -3,7 +3,7 @@ const nextConfig = {
     async headers(){
         return[
             {
-                source: "/api/.(.*)",
+                source: "/api/(.*)",
                 headers: [
                     {
                         key: "Access-Control-Allow-Origin",
@@ -11,7 +11,7 @@ const nextConfig = {
                     },
                     {
                         key: "Access-Control-Allow-Methods",
-                        value: "GET, POST, PUT, PUSH, DELETE, OPTIONS",
+                        value: "GET, POST, PUT, DELETE, OPTIONS",
                     },
                     {
                         key: "Access-Control-Allow-Headers",
