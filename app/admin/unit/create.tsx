@@ -1,4 +1,4 @@
-import { Create, SimpleForm, List, TextInput, required, ReferenceInput, NumberInput } from "react-admin";
+import { Create, SimpleForm, List, TextInput, required, ReferenceInput, NumberInput, SelectInput } from "react-admin";
 
 export const UnitCreate = () => {
     return(
@@ -14,10 +14,9 @@ export const UnitCreate = () => {
            validate = {[required()]} 
            label="Description" 
            />
-           <ReferenceInput 
-           source="courseId"
-           reference="courses"
-           />
+             <ReferenceInput source="courseId" reference="courses" label="Course">
+                    <SelectInput optionText="title" validate={[required()]} />
+                </ReferenceInput>
            <NumberInput 
            source="order"
            validate={[required()]}
