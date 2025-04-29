@@ -1,51 +1,44 @@
-// app/api/units/route.ts
-import { NextResponse } from "next/server";
 import db from "@/db/drizzle";
 import { units } from "@/db/schema";
 import { getIsAdmin } from "@/lib/admin";
+import { eq } from "drizzle-orm";
+import { NextResponse } from "next/server";
 
-// GET: Fetch all units
-export const GET = async () => {
-  const isAdmin = await getIsAdmin();
-  if (!isAdmin) {
-    console.log("Unauthorized access - GET");
-    return new NextResponse("Unauthorized", { status: 401 });
-  }
-
-  try {
-    const data = await db.query.units.findMany();
-    return NextResponse.json(data);
-  } catch (error) {
-    console.error("Error fetching units:", error);
-    return new NextResponse("Internal Server Error", { status: 500 });
-  }
-};
-
-// POST: Create a new course
-export const POST = async (req: Request) => {
-  const isAdmin = await getIsAdmin();
-  if (!isAdmin) {
-    console.log("Unauthorized access - POST");
-    return new NextResponse("Unauthorized", { status: 401 });
-  }
-
-  try {
-    const body = await req.json();
-    console.log("Received body for POST:", body);
-
-    if (!body.title || !body.ImageSrc) {
-      console.log("Missing required fields:", body);
-      return new NextResponse("Missing required fields", { status: 400 });
+export const GET = async (
+    req: Request,
+    {params} : {params: { unitId: number }},
+) => {
+    if(!getIsAdmin()) {
+        return new NextResponse("Unauthorized", {status: 403});
     }
+  const data = await db.query.units.findFirst({
+    where: eq(units.id, params.unitId),
+  });
 
-    const data = await db.insert(units).values({
-      ...body,
-    }).returning();
-
-    console.log("Course created:", data);
-    return NextResponse.json(data[0]);
-  } catch (error) {
-    console.error("Error inserting course:", error);
-    return new NextResponse("Internal Server Error", { status: 500 });
+  return NextResponse.json(data);
+};
+export const PUT = async (
+  req: Request,
+  {params} : {params: { unitId: number }},
+) => {
+  if(!getIsAdmin()) {
+      return new NextResponse("Unauthorized", {status: 403});
   }
+  const body = await req.json();
+const data = await db.update(units).set({
+  ...body,
+}).where(eq(units.id, params.unitId)).returning();
+
+return NextResponse.json(data);
+};
+export const DELETE = async (
+  req: Request,
+  {params} : {params: { unitId: number }},
+) => {
+  if(!getIsAdmin()) {
+      return new NextResponse("Unauthorized", {status: 403});
+  }
+const data = await db.delete(units).where(eq(units.id, params.unitId)).returning();
+
+return NextResponse.json(data[0]);
 };
