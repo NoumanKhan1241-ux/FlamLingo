@@ -11,7 +11,7 @@ export default function Home() {
       </div>
       <div className='flex flex-col items-center gap y-8'>
        <h1 className='text-xl lg:text-3xl font-bold text-neutral-600max-w-[480px] text-center'>
-        Learn, Master and Practice Pashto and Sindhi with Flam Lingo
+        Learn, Master and Practice Pashto with Flam Lingo
        </h1>
        <div className='flex flex-col items-center gap-y-3 max-w-[330px] w-full'>
         <ClerkLoading>

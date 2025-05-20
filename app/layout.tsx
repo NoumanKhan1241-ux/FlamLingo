@@ -6,23 +6,17 @@ import {
   SignedOut,
   UserButton,
 } from '@clerk/nextjs'
-import { Nunito, Geist_Mono } from "next/font/google";
+import { Nunito } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs"
 import { Toaster } from "@/components/ui/sonner";
 import { ExitModal } from "@/components/modals/exit-modal";
+import { Chatbot } from "@/components/chatbot/Chatbot";
 import "./globals.css";
 import Image from 'next/image';
 import { HeartsModal } from "@/components/modals/hearts-modal";
 import { PracticeModal } from "@/components/modals/practice-modal";
 
-
 const font = Nunito({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
   subsets: ["latin"],
 });
 
@@ -39,18 +33,21 @@ export default function RootLayout({
   return (
       <ClerkProvider> 
     <html lang="en">
-      <body
-        className={font.className}
-      >
+      <body className={font.className}>
         <Toaster />
-      <ExitModal
-      />
-      <HeartsModal />
-      <PracticeModal />
+        <ExitModal />
+        <HeartsModal />
+        <PracticeModal />
+        <Chatbot 
+          title="Language Learning Assistant"
+          initialMessage="How can I help you with your language learning journey today?"
+          position="bottom-right"
+          width="400px"
+          height="600px"
+        />
         {children}
       </body>
     </html>
-    </ClerkProvider>
+      </ClerkProvider>
   );
-  
 }

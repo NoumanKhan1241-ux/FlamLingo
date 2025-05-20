@@ -51,7 +51,7 @@ export const Quiz = ({
 
   const router = useRouter();
 
-  const [finishAudio] = useAudio({ src: "/success.mp3", autoPlay: true });
+  const [finishAudio, , finishControls] = useAudio({ src: "/success.mp3" });
 
   const [correctAudio, _c, correctControls] = useAudio({ src: "/correct.mp3" });
 
@@ -72,6 +72,7 @@ export const Quiz = ({
     );
     return uncompletedIndex === -1 ? 0 : uncompletedIndex;
   });
+  const [showCompletion, setShowCompletion] = useState(false);
 
   const [selectedOption, setSelectedOption] = useState<number>();
   const [status, setStatus] = useState<"correct" | "incorrect" | "none">("none");
@@ -80,7 +81,12 @@ export const Quiz = ({
   const options = challenge?.challengeOptions ?? [];
 
   const onNext = () => {
-    setActiveIndex((current) => current + 1);
+    if (activeIndex === challenges.length - 1) {
+      setShowCompletion(true);
+      finishControls.play();
+    } else {
+      setActiveIndex((current) => current + 1);
+    }
   };
 
   const onSelect = (id: number) => {
@@ -96,9 +102,14 @@ export const Quiz = ({
       return;
     }
     if (status === "correct") {
-      onNext();
-      setStatus("none");
-      setSelectedOption(undefined);
+      if (activeIndex === challenges.length - 1) {
+        setShowCompletion(true);
+        finishControls.play();
+      } else {
+        onNext();
+        setStatus("none");
+        setSelectedOption(undefined);
+      }
       return;
     }
 
@@ -120,6 +131,11 @@ export const Quiz = ({
             correctControls.play();
             setStatus("correct");
             setPercentage((prev) => prev + 100 / challenges.length);
+
+            if (activeIndex === challenges.length - 1) {
+              setShowCompletion(true);
+              finishControls.play();
+            }
 
             if (initialPercentage === 100) {
               setHearts((prev) => Math.min(prev + 1, 5));
@@ -152,11 +168,10 @@ export const Quiz = ({
     }
   };
 
-  if ( !challenge) {
+  if (showCompletion || !challenge) {
     return (
       <>
-        {finishAudio} {/* Important: render the audio element */}
-
+        {finishAudio}
         <Confetti
           width={width}
           height={height}
@@ -190,7 +205,9 @@ export const Quiz = ({
         <Footer
           lessonId={lessonId}
           status="completed"
-          onCheck={() => router.push("/learn")}
+          onCheck={() => {
+            router.push("/learn");
+          }}
         />
       </>
     );

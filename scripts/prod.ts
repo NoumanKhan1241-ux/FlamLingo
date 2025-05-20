@@ -184,10 +184,12 @@ const main = async () => {
                                     audioSrc: "/pashto_robot.mp3"
                                 },
                             ]);
-                        };
+                        } 
                     };
                 };
             };
          };
-    };
+    } catch (error) {
+        console.error("An error occurred while seeding the database:", error);
+    }
 };

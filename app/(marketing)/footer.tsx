@@ -13,14 +13,7 @@ export const Footer=()=>{
            className='mr-4 rounded-md'/> 
            Pashto
         </Button>
-        <Button size="lg" variant="ghost" className='w-full'>
-           <Image src={'/sindhiflag.png'} 
-           alt={'Pashto'} 
-           height={42} 
-           width={50}
-           className='mr-4 rounded-md'/> 
-           Sindhi
-        </Button>
+         
         
     </div>
 </footer>

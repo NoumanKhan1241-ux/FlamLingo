@@ -40,6 +40,9 @@ return(
                           <SidebarItem  label="Shop"
                          iconSrc="/shop.png"
                           href="/shop"/>
+                           <SidebarItem  label="Translation"
+                         iconSrc="/book.png"
+                          href="/translation"/>
                         </div>       
                         <div className="p-4 ">
                              <ClerkLoading>
