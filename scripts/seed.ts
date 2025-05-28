@@ -53,31 +53,31 @@ const main = async () => {
                 id: 1, //pashto
                 unitId: 1,        // unit 1
                 order: 1,
-                title: "Nouns",
+                title: "alphabets",
             },
             {
                 id: 2, //pashto
                 unitId: 1,        // unit 1
                 order: 2,
-                title: "Verbs",
+                title: "alphabets",
             },
             {
                 id: 3, //pashto
                 unitId: 1,        // unit 1
                 order: 3,
-                title: "Nouns",
+                title: "alphabets",
             },
             {
                 id: 4, //pashto
                 unitId: 1,        // unit 1
                 order: 4,
-                title: "Nouns",
+                title: "alphabets",
             },
             {
                 id: 5, //pashto
                 unitId: 1,        // unit 1
                 order: 5,
-                title: "Nouns",
+                title: "alphabets",
             },
             
         ]);
@@ -85,48 +85,62 @@ const main = async () => {
         await db.insert(schema.challenges).values([
             {
                 id: 1, //pashto
-                lessonId: 1,   //nouns
+                lessonId: 1,   //alphabets
                 type: "SELECT",
                 order: 1,
-                question: 'Which one of these is"the man"?',
+                question: 'ا',
             },
             {
                 id: 2, //pashto
                 lessonId: 1,   //nouns
-                type: "ASSIST",
+                type: "SELECT",
                 order: 2,
-                question: '"the man"',
+                question: 'آ',
             },
             {
                 id: 3, //pashto
                 lessonId: 1,   //nouns
                 type: "SELECT",
                 order: 3,
-                question: 'Which one of these is"the robot"?',
+                question: 'ب',
+            },
+            {
+                id: 4, //pashto
+                lessonId: 1,   //nouns
+                type: "SELECT",
+                order: 4,
+                question: 'پ',
+            },
+            {
+                id: 5, //pashto
+                lessonId: 1,   //nouns
+                type: "SELECT",
+                order: 5,
+                question: 'ت',
             },
             
         ]);
 
         await db.insert(schema.challengeOptions).values([
             {
-                challengeId: 1, //which one of these is the man
-                imageSrc: "/man.png",
+                challengeId: 1, //ا
+                imageSrc: "/angoor.png",
                 correct: true,
-                text: "سړی",
+                text: "انګور",
                 audioSrc: "/pashto_man.mp3",
             },
             {
-                challengeId: 1, //which one of these is the man
-                imageSrc: "/woman.png",
-                correct: false,
-                text: "ښځه",
+                challengeId: 1, //ا
+                imageSrc: "/anar.png",
+                correct: true,
+                text: "انار",
                 audioSrc: "/pashto_woman.mp3",
             },
             {
-                challengeId: 1, //which one of these is the man
-                imageSrc: "/robot.png",
-                correct: false,
-                text: "روبوټ",
+                challengeId: 1, //ا
+                imageSrc: "/obe.png",
+                correct: true,
+                text: "اوبه",
                 audioSrc: "/pashto_robot.mp3",
             },
             
@@ -135,48 +149,100 @@ const main = async () => {
 
         await db.insert(schema.challengeOptions).values([
             {
-                challengeId: 2, // the man
+                challengeId: 2, //آری
+                imageSrc:"/awaz.png",
                 correct: true,
-                text: "سړی",
+                text: "آواز",
                 audioSrc: "/pashto_man.mp3",
             },
             {
-                challengeId: 2, // the man
-                correct: false,
-                text: "ښځه",
+                challengeId: 2, // آ
+                imageSrc:"/aas.png",
+                correct: true,
+                text: "آس",
                 audioSrc: "/pashto_woman.mp3",
             },
-            {
-                challengeId: 2, // the man
-                correct: false,
-                text: "روبوټ",
-                audioSrc: "/pashto_robot.mp3",
+             {
+                challengeId: 2, // آ
+                imageSrc:"/aari.png",
+                correct: true,
+                text: "آری",
+                audioSrc: "/pashto_woman.mp3",
             },
-            
-            
+         
             
         ]);
 
         await db.insert(schema.challengeOptions).values([
             {
-                challengeId: 3, //which one of these is the robot
-                imageSrc: "/man.png",
-                correct: false,
-                text: "سړی",
+                challengeId: 3, //ب
+                imageSrc: "/baagh.png",
+                correct: true,
+                text: "باغ",
                 audioSrc: "/pashto_man.mp3",
             },
             {
-                challengeId: 3, //which one of these is the robot
-                imageSrc: "/woman.png",
-                correct: false,
-                text: "ښځه",
+                challengeId: 3, //ب
+                imageSrc: "/baran.png",
+                correct: true,
+                text: "باران",
                 audioSrc: "/pashto_woman.mp3",
             },
             {
-                challengeId: 3, //which one of these is the robot
-                imageSrc: "/robot.png",
+                challengeId: 3, //ب
+                imageSrc: "/bicycle.png",
                 correct: true,
-                text: "روبوټ",
+                text: "بايسکل",
+                audioSrc: "/pashto_robot.mp3",
+            },
+            
+            
+        ]);
+         await db.insert(schema.challengeOptions).values([
+            {
+                challengeId: 4, //پ
+                imageSrc: "/park.png",
+                correct: true,
+                text: "پارک",
+                audioSrc: "/pashto_man.mp3",
+            },
+            {
+                challengeId: 4, //پ
+                imageSrc: "/paak.png",
+                correct: true,
+                text: "پاک",
+                audioSrc: "/pashto_woman.mp3",
+            },
+            {
+                challengeId: 4, //پ
+                imageSrc: "/pesho.png",
+                correct: true,
+                text: "پیشو",
+                audioSrc: "/pashto_robot.mp3",
+            },
+            
+            
+        ]);
+         await db.insert(schema.challengeOptions).values([
+            {
+                challengeId: 5, //ت
+                imageSrc: "/toot.png",
+                correct: true,
+                text: "توت",
+                audioSrc: "/pashto_man.mp3",
+            },
+            {
+                challengeId: 5, //ت
+                imageSrc: "/trazu.png",
+                correct: true,
+                text: "ترازو",
+                audioSrc: "/pashto_woman.mp3",
+            },
+            {
+                challengeId: 5, //ت
+                imageSrc: "/taaj.png",
+                correct: true,
+                text: "تاج",
                 audioSrc: "/pashto_robot.mp3",
             },
             
@@ -184,21 +250,21 @@ const main = async () => {
         ]);
         await db.insert(schema.challenges).values([
             {
-                id: 4, //pashto
+                id: 6, //pashto
                 lessonId: 2,   //verbs
                 type: "SELECT",
                 order: 1,
                 question: 'Which one of them is"Running"?',
             },
             {
-                id: 5, //pashto
+                id: 7, //pashto
                 lessonId: 2,   //verbs
                 type: "ASSIST",
                 order: 2,
                 question: '"Drinking water"',
             },
             {
-                id: 6, //pashto
+                id: 8, //pashto
                 lessonId: 2,   //verbs
                 type: "SELECT",
                 order: 3,
@@ -208,21 +274,21 @@ const main = async () => {
         ]);
         await db.insert(schema.challengeOptions).values([
             {
-                challengeId: 4, //which one of them is Running
+                challengeId: 6, //which one of them is Running
                 imageSrc: "/driving_1.png",
                 correct: false,
                 text: "موټر چلول",
                 audioSrc: "/pashto_driving.mp3",
             },
             {
-                challengeId: 4, //which one of them is Running
+                challengeId: 6, //which one of them is Running
                 imageSrc: "/running.png",
                 correct: true,
                 text: "منډه",
                 audioSrc: "/pashto_running.mp3",
             },
             {
-                challengeId: 4, //which one of them is Running
+                challengeId: 6, //which one of them is Running
                 imageSrc: "/cycling.png",
                 correct: false,
                 text: "سایکل چلول",
@@ -234,19 +300,19 @@ const main = async () => {
 
         await db.insert(schema.challengeOptions).values([
             {
-                challengeId: 5, // drinking water
+                challengeId: 7, // drinking water
                 correct: true,
                 text: "اوبه څکل",
                 audioSrc: "/pashto_drinking_water.mp3",
             },
             {
-                challengeId: 5, // drinking water
+                challengeId: 7, // drinking water
                 correct: false,
                 text: "منډه",
                 audioSrc: "/pashto_running.mp3",
             },
             {
-                challengeId: 5, // drinking water
+                challengeId: 7, // drinking water
                 correct: false,
                 text: "موټر چلول",
                 audioSrc: "/pashto_driving.mp3",
@@ -258,21 +324,22 @@ const main = async () => {
 
         await db.insert(schema.challengeOptions).values([
             {
-                challengeId: 6, //which one of these is not driving
+                challengeId: 8, //which one of these is not driving
                 imageSrc: "/driving_1.png",
                 correct: false,
                 text: "موټر چلول",
                 audioSrc: "/pashto_driving.mp3",
             },
             {
-                challengeId: 6, //which one of these is not driving
+                challengeId: 8
+                , //which one of these is not driving
                 imageSrc: "/driving_2.png",
                 correct: false,
                 text: "موټر چلول",
                 audioSrc: "/pashto_driving.mp3",
             },
             {
-                challengeId: 6, //which one of these is not driving
+                challengeId: 8, //which one of these is not driving
                 imageSrc: "/cycling.png",
                 correct: true,
                 text: "سایکل چلول",
@@ -283,21 +350,21 @@ const main = async () => {
         ]);
         await db.insert(schema.challenges).values([
             {
-                id: 7, //pashto
+                id: 9, //pashto
                 lessonId: 3,   //verbs
                 type: "SELECT",
                 order: 1,
                 question: 'Which one of them is"Running"?',
             },
             {
-                id: 8, //pashto
+                id: 10, //pashto
                 lessonId: 3,   //verbs
                 type: "ASSIST",
                 order: 2,
                 question: '"Drinking water"',
             },
             {
-                id: 9, //pashto
+                id: 11, //pashto
                 lessonId: 3,   //verbs
                 type: "SELECT",
                 order: 3,
@@ -307,21 +374,21 @@ const main = async () => {
         ]);
         await db.insert(schema.challengeOptions).values([
             {
-                challengeId: 7, //which one of them is Running
+                challengeId: 9, //which one of them is Running
                 imageSrc: "/driving_1.png",
                 correct: false,
                 text: "موټر چلول",
                 audioSrc: "/pashto_driving.mp3",
             },
             {
-                challengeId: 7, //which one of them is Running
+                challengeId: 9, //which one of them is Running
                 imageSrc: "/running.png",
                 correct: true,
                 text: "منډه",
                 audioSrc: "/pashto_running.mp3",
             },
             {
-                challengeId: 7, //which one of them is Running
+                challengeId: 9, //which one of them is Running
                 imageSrc: "/cycling.png",
                 correct: false,
                 text: "سایکل چلول",
@@ -333,19 +400,19 @@ const main = async () => {
 
         await db.insert(schema.challengeOptions).values([
             {
-                challengeId: 8, // drinking water
+                challengeId: 10, // drinking water
                 correct: true,
                 text: "اوبه څکل",
                 audioSrc: "/pashto_drinking_water.mp3",
             },
             {
-                challengeId: 8, // drinking water
+                challengeId: 10, // drinking water
                 correct: false,
                 text: "منډه",
                 audioSrc: "/pashto_running.mp3",
             },
             {
-                challengeId: 8, // drinking water
+                challengeId: 10, // drinking water
                 correct: false,
                 text: "موټر چلول",
                 audioSrc: "/pashto_driving.mp3",
@@ -357,21 +424,21 @@ const main = async () => {
 
         await db.insert(schema.challengeOptions).values([
             {
-                challengeId: 9, //which one of these is not driving
+                challengeId: 11, //which one of these is not driving
                 imageSrc: "/driving_1.png",
                 correct: false,
                 text: "موټر چلول",
                 audioSrc: "/pashto_driving.mp3",
             },
             {
-                challengeId: 9, //which one of these is not driving
+                challengeId: 11, //which one of these is not driving
                 imageSrc: "/driving_2.png",
                 correct: false,
                 text: "موټر چلول",
                 audioSrc: "/pashto_driving.mp3",
             },
             {
-                challengeId: 9, //which one of these is not driving
+                challengeId: 11, //which one of these is not driving
                 imageSrc: "/cycling.png",
                 correct: true,
                 text: "سایکل چلول",
