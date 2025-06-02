@@ -43,7 +43,7 @@ return(
                           <SidebarItem  label="Translation"
                          iconSrc="/book.png"
                           href="/translation"/>
-                          <SidebarItem  label="Test"
+                          <SidebarItem  label="Evaluation"
                          iconSrc="/test.png"
                           href="/test"/>
                         </div>       

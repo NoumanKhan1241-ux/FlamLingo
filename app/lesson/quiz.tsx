@@ -113,13 +113,9 @@ export const Quiz = ({
       return;
     }
 
-    const correctOption = options.find((option) => option.correct);
+    const isCorrect = options.some((option) => option.correct && option.id === selectedOption);
 
-    if (!correctOption) {
-      return;
-    }
-
-    if (correctOption.id === selectedOption) {
+    if (isCorrect) {
       startTransition(() => {
         upsertChallengeProgress(challenge.id)
           .then((response) => {
