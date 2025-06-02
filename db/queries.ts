@@ -2,7 +2,7 @@ import { cache } from "react";
 import db from "@/db/drizzle";
 import { auth } from "@clerk/nextjs/server";
 import { asc, eq } from "drizzle-orm";
-import {challengeProgress, courses, lessons, units, userProgress, userSubscription } from "@/db/schema";
+import {challengeProgress, courses, lessons, units, userProgress, userSubscription, lessonProgress } from "@/db/schema";
 
 
 export const getUserProgress = cache(async () => {
@@ -30,9 +30,12 @@ export const getUnits = cache(async () => {
     if(!userId || !userProgress?.activeCourseId){
         return [];
     }
+    // Fetch all lessonProgress for this user
+    const userLessonProgress = await db.query.lessonProgress.findMany({
+      where: eq(lessonProgress.userId, userId),
+    });
     const data = await db.query.units.findMany({
         orderBy: (units, {asc})=>[asc(units.order)],
-
         where: eq(units.courseId, userProgress.activeCourseId),
         with: {
             lessons: {
@@ -40,7 +43,6 @@ export const getUnits = cache(async () => {
                 with: {
                     challenges: {
                         orderBy: (challenges, {asc})=>[asc(challenges.order)],
-
                         with: {
                             challengeProgress: {
                                 where: eq(challengeProgress.userId, userId),
@@ -53,24 +55,13 @@ export const getUnits = cache(async () => {
     });
     const normalizedData = data.map((unit) => {
         const lessonsWithCompletedStatus = unit.lessons.map((lesson) => {
-
-            if(lesson.challenges.length === 0){
-                return { ...lesson, completed: false };
-
-            }
-
-            const allCompletedChallenges = lesson.challenges.every((challenge) => {
-                return challenge.challengeProgress && challenge.challengeProgress.length > 0
-                && challenge.challengeProgress.every((progress) => progress.completed);
-
-            });
-
-            return { ...lesson,completed: allCompletedChallenges};
+            // Use lessonProgress to determine completion
+            const progress = userLessonProgress.find(lp => lp.lessonId === lesson.id && lp.completed);
+            return { ...lesson, completed: !!progress };
         });
-
         return{ ...unit, lessons: lessonsWithCompletedStatus };
     });
-        return normalizedData;
+    return normalizedData;
 });
 
 export const getCourses = cache(async ()=>{

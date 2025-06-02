@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
@@ -45,23 +45,54 @@ const questions: Question[] = [
   }
 ];
 
+// Define the correct answers for each question (index matches questions array)
+const correctAnswers = [
+  "Native-like", // Q1
+  "Home",        // Q2
+  "Speaking",    // Q3
+  "Yes",         // Q4
+  "Every day",   // Q5
+  "For school"   // Q6
+];
+
 export const TestClient = () => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState<string[]>([]);
   const [isComplete, setIsComplete] = useState(false);
+  const [score, setScore] = useState<number | null>(null);
   const router = useRouter();
 
   const handleAnswer = (answer: string) => {
-    setAnswers([...answers, answer]);
+    const newAnswers = [...answers, answer];
+    setAnswers(newAnswers);
     if (currentQuestion < questions.length - 1) {
       setCurrentQuestion(currentQuestion + 1);
     } else {
+      // Calculate real score
+      let correctCount = 0;
+      for (let i = 0; i < correctAnswers.length; i++) {
+        if (newAnswers[i] === correctAnswers[i]) {
+          correctCount++;
+        }
+      }
+      const calculatedScore = Math.round((correctCount / questions.length) * 100);
+      setScore(calculatedScore);
       setIsComplete(true);
     }
   };
 
   const handleStartLearning = () => {
-    router.push("/learn");
+    if (score !== null) {
+      fetch("/api/evaluation/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ score }),
+      }).then(() => {
+        router.push("/learn");
+      });
+    } else {
+      router.push("/learn");
+    }
   };
 
   const progress = ((currentQuestion + 1) / questions.length) * 100;
@@ -102,6 +133,8 @@ export const TestClient = () => {
           transition={{ delay: 0.4 }}
           className="text-muted-foreground text-lg mb-8 max-w-[500px]"
         >
+          Your score: {score !== null ? `${score}%` : "Calculating..."}
+          <br />
           We've received your responses and will personalize your learning experience accordingly. Let's begin your language learning journey!
         </motion.p>
         <motion.div

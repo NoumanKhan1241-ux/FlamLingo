@@ -124,3 +124,17 @@ export const userSubscription = pgTable("user_subscription", {
 
 
 })
+
+export const evaluationResults = pgTable("evaluation_results", {
+    id: serial("id").primaryKey(),
+    userId: text("user_id").notNull(),
+    score: integer("score").notNull(), // percentage
+    createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const lessonProgress = pgTable("lesson_progress", {
+  id: serial("id").primaryKey(),
+  userId: text("user_id").notNull(),
+  lessonId: integer("lesson_id").references(() => lessons.id, {onDelete: "cascade"}).notNull(),
+  completed: boolean("completed").notNull().default(true),
+});
