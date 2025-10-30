@@ -41,8 +41,11 @@ return(
                          iconSrc="/shop.png"
                           href="/shop"/>
                           <SidebarItem  label="Translation"
-                         iconSrc="/book.png"
+                         iconSrc="/translation.png"
                           href="/translation"/>
+                          <SidebarItem  label="Phrasebook"
+                         iconSrc="/book.png"
+                          href="/phrasebook"/>
                           <SidebarItem  label="Evaluation"
                          iconSrc="/test.png"
                           href="/test"/>

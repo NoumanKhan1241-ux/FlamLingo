@@ -27,13 +27,14 @@ const main = async () => {
                 imageSrc: "/pashtoflag.png",
 
             },
-         /*   {
-               id:2,
+            
+            {
+               id: 2,
                title: "Sindhi",
                imageSrc: "/sindhiflag.png",
             },
 
-            */
+            
 
         ]);
 

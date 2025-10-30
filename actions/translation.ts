@@ -56,6 +56,7 @@ export const translateText = async ({
         english: 'en',
         pashto: 'ps',
         urdu: 'ur',
+        sindhi: 'sd',
     };
 
     const from = langMap[sourceLanguage] || 'en';

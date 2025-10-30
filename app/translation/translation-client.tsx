@@ -7,6 +7,25 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { translateText } from "@/actions/translation";
 import { toast } from "sonner";
 
+const today = new Date().getDate();
+const pashtoPhrasesToday = [
+  { phrase: "څنگه يې؟", translation: "How are you?" },
+  { phrase: "دیړوخت وشو نہ خکاری", translation: "Long time no see" },
+  { phrase: "ستا نون څه", translation: "What's your name?" },
+  { phrase: "ته د كوم خاى يې؟", translation: "Where are you from?" },
+  { phrase: "دخداى په امان", translation: "Goodbye" },
+  { phrase: "ايا ته په پښتو خبرې کولى شې؟", translation: "Do you speak Pashto?" },
+];
+
+const sindhiPhrasesToday = [
+  { phrase: "توهان جا ڪهڙا حال آهن؟", translation: "How are you?" },
+  { phrase: "ڏِسَڻَ من ئيِ نَٿا اَچو", translation: "Long time no see" },
+  { phrase: "تُنهِجو نالو ڇا آهي؟", translation: "What's your name?" },
+  { phrase: "توهان ڪٿان جا آهيو؟", translation: "Where are you from?" },
+  { phrase: "توهان ملي ڏاڍو سٺو لڳو", translation: "Pleased to meet you" },
+  { phrase: "ڇا توهان سنڌي آهيو؟", translation: "Do you speak Sindhi?" },
+];
+
 export const TranslationClient = () => {
     const [sourceText, setSourceText] = useState("");
     const [translatedText, setTranslatedText] = useState("");
@@ -60,6 +79,7 @@ export const TranslationClient = () => {
                             <SelectContent>
                                 <SelectItem value="pashto">🇦🇫 Pashto</SelectItem>
                                 <SelectItem value="english">🇬🇧 English</SelectItem>
+                                <SelectItem value="sindhi">🇵🇰 Sindhi</SelectItem>
                                 <SelectItem value="urdu">🇵🇰 Urdu</SelectItem>
                             </SelectContent>
                         </Select>
@@ -80,6 +100,7 @@ export const TranslationClient = () => {
                             <SelectContent>
                                 <SelectItem value="pashto">🇦🇫 Pashto</SelectItem>
                                 <SelectItem value="english">🇬🇧 English</SelectItem>
+                                <SelectItem value="sindhi">🇵🇰 Sindhi</SelectItem>
                                 <SelectItem value="urdu">🇵🇰 Urdu</SelectItem>
                             </SelectContent>
                         </Select>
