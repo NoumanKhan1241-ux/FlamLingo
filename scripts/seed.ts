@@ -27,15 +27,11 @@ const main = async () => {
                 imageSrc: "/pashtoflag.png",
 
             },
-            
             {
-               id: 2,
-               title: "Sindhi",
-               imageSrc: "/sindhiflag.png",
+                id: 2,
+                title: "Sindhi",
+                imageSrc: "/sindhiflag.png",
             },
-
-            
-
         ]);
 
         await db.insert(schema.units).values([
@@ -58,6 +54,28 @@ const main = async () => {
                 courseId: 1,
                 title: "Unit 3",
                 description: "Learn advanced Pashto",
+                order: 3,
+            },
+            // Sindhi units mirroring Pashto
+            {
+                id: 4,  //sindhi
+                courseId: 2,
+                title: "Unit 1",
+                description: "Learn the basics of Sindhi",
+                order: 1,
+            },
+            {
+                id: 5,
+                courseId: 2,
+                title: "Unit 2",
+                description: "Learn intermediate Sindhi",
+                order: 2,
+            },
+            {
+                id: 6,
+                courseId: 2,
+                title: "Unit 3",
+                description: "Learn advanced Sindhi",
                 order: 3,
             }
         ]);
@@ -152,7 +170,98 @@ const main = async () => {
                 unitId: 3,
                 order: 5,
                 title: "Directions",
-            }
+            },
+            // Sindhi lessons mirroring Pashto (use unique ids and Sindhi unitIds 4..6)
+            {
+                id: 16,
+                unitId: 4,        // sindhi unit 1
+                order: 1,
+                title: "alphabets",
+            },
+            {
+                id: 17,
+                unitId: 4,
+                order: 2,
+                title: "words",
+            },
+            {
+                id: 18,
+                unitId: 4,
+                order: 3,
+                title: "sentences",
+            },
+            {
+                id: 19,
+                unitId: 4,
+                order: 4,
+                title: "paragraphs",
+            },
+            {
+                id: 20,
+                unitId: 4,
+                order: 5,
+                title: "alphabets",
+            },
+            {
+                id: 21,
+                unitId: 5,
+                order: 1,
+                title: "Common Phrases",
+            },
+            {
+                id: 22,
+                unitId: 5,
+                order: 2,
+                title: "Greetings",
+            },
+            {
+                id: 23,
+                unitId: 5,
+                order: 3,
+                title: "Numbers",
+            },
+            {
+                id: 24,
+                unitId: 5,
+                order: 4,
+                title: "Days of Week",
+            },
+            {
+                id: 25,
+                unitId: 5,
+                order: 5,
+                title: "Months",
+            },
+            {
+                id: 26,
+                unitId: 6,
+                order: 1,
+                title: "Family Members",
+            },
+            {
+                id: 27,
+                unitId: 6,
+                order: 2,
+                title: "Professions",
+            },
+            {
+                id: 28,
+                unitId: 6,
+                order: 3,
+                title: "Weather",
+            },
+            {
+                id: 29,
+                unitId: 6,
+                order: 4,
+                title: "Food Items",
+            },
+            {
+                id: 30,
+                unitId: 6,
+                order: 5,
+                title: "Directions",
+            },
         ]);
 
         await db.insert(schema.challenges).values([
@@ -295,7 +404,43 @@ const main = async () => {
                 type: "SELECT",
                 order: 3,
                 question: 'Which one of these is" not driving"?',
-            }
+            },
+            // --- Sindhi Lesson 1 (unitId: 4, lesson id: 16) mirror with 5 SELECT challenges ---
+            {
+                id: 21, // sindhi
+                lessonId: 16,   // alphabets (sindhi)
+                type: "SELECT",
+                order: 1,
+                question: 'ا',
+            },
+            {
+                id: 22, // sindhi
+                lessonId: 16,
+                type: "SELECT",
+                order: 2,
+                question: 'ب',
+            },
+            {
+                id: 23, // sindhi
+                lessonId: 16,
+                type: "SELECT",
+                order: 3,
+                question: 'ت',
+            },
+            {
+                id: 24, // sindhi
+                lessonId: 16,
+                type: "SELECT",
+                order: 4,
+                question: 'ج',
+            },
+            {
+                id: 25, // sindhi
+                lessonId: 16,
+                type: "SELECT",
+                order: 5,
+                question: 'خ',
+            },
         ]);
 
         await db.insert(schema.challengeOptions).values([

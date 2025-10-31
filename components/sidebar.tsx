@@ -8,12 +8,16 @@ import {
 } from "@clerk/nextjs"
 import { SidebarItem } from "./sidebar-item";
 import {Loader} from 'lucide-react';
+import { getIsAdmin } from "@/lib/admin";
+import AdminSidebarItem from "@/components/admin-sidebar-item";
+
 type Props = {
 className?: string;
 
 }
 
-export const Sidebar = ({className}: Props) => {
+export const Sidebar = async ({className}: Props) => {
+  const isAdmin = await getIsAdmin();
 return(
      
        <div className={cn("flex  h-full lg:w-[256px] lg:fixed left-0 top-0 border-r-2 flex-col",className,
@@ -49,11 +53,12 @@ return(
                           <SidebarItem  label="Reading"
                          iconSrc="/reading.png"
                           href="/reading"/>
-                          <SidebarItem  label="Evaluation"
-                         iconSrc="/test.png"
-                          href="/test"/>
                         </div>       
                         <div className="p-4 ">
+                             {/* Admin button pinned above profile */}
+                             <div className="mb-3">
+                               <AdminSidebarItem canAccess={isAdmin} />
+                             </div>
                              <ClerkLoading>
                                 <Loader className="h-5 w-5 text-muted-foreground animate-spin"/>
                              </ClerkLoading>

@@ -1,14 +1,15 @@
 "use client";
 
 import Link from "next/link";
-import { Check, Crown, Star, Indent } from "lucide-react";
+import { Check, Crown, Star } from "lucide-react";
 import { CircularProgressbarWithChildren } from "react-circular-progressbar";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 
 import "react-circular-progressbar/dist/styles.css";
-type Props = {
+
+ type Props = {
     id: number;
     index: number;
     totalCount: number;
@@ -18,7 +19,6 @@ type Props = {
 };
 
 export const LessonButton = ({
-
     id,
     index,
     totalCount,
@@ -55,9 +55,16 @@ export const LessonButton = ({
 
      const Icon = isCompleted ? Check: isLast ? Crown :  Star ;
 
-     const href = isCompleted ? `/lesson/${id}`  : "/lesson";
+     const href = locked ? "#" : `/lesson/${id}`;
+
+    const onClick: React.MouseEventHandler<HTMLAnchorElement> = (e) => {
+      if (locked) {
+        e.preventDefault();
+      }
+    };
+
     return(
-        <Link href = {href}  aria-disabled={locked} style ={{pointerEvents: locked ? "none" : "auto" }} >
+        <Link href = {href}  aria-disabled={locked} onClick={onClick}>
             <div
             className="relative "
             style={{
@@ -73,52 +80,32 @@ export const LessonButton = ({
                         <div className="absolute left-1/2 -bottom-2  w-0 h-0 border-x-8 border-x-transparent border-t-8 transform -translate-x-1/2 "/>
                     </div>
                     <CircularProgressbarWithChildren
-                    value = {Number.isNaN(percentage) ? 0 : percentage}
+                    value={percentage}
+                    strokeWidth={4}
                     styles={{
                         path: {
-                            stroke: "#4ade80",
+                            stroke: "#22C55E",
                         },
                         trail: {
-                            stroke: "#e5e7eb",
+                            stroke: "#E5E7EB",
                         },
                     }}
-                    
                     >
-                     <Button
-                     size="rounded"
-                     variant={locked ? "locked" : "secondary"}
-                     className="h-[70px] w-[70px] border-b-8 rounded-full flex items-center justify-center"
-                     >
-                        <Icon 
-                        className={cn(
-                            "h-10 w-10 rounded-full",
-                            locked 
-                            ? "fill-neutral-400 text-neutral-400 stroke-neutral-400" : "fill-primary-foreground text-primary-foreground", isCompleted && "fill-none stroke-[4]"
-                         )}
-                        />
-                     </Button>
-
+                        <div className="h-[88px] w-[88px] rounded-full bg-white flex items-center justify-center border-2">
+                            <Star className="h-8 w-8 text-green-500" />
+                        </div>
                     </CircularProgressbarWithChildren>
                 </div>
-            
-        ) : (
-            <Button
-                     size="rounded"
-                     variant={locked ? "locked" : "secondary"}
-                     className="h-[70px] w-[70px] border-b-8 rounded-full flex items-center justify-center"
-                     >
-                        <Icon 
-                        className={cn(
-                            "h-10 w-10 rounded-full",
-                            locked 
-                            ? "fill-neutral-400 text-neutral-400 stroke-neutral-400" : "fill-primary-foreground text-primary-foreground", isCompleted && "fill-none stroke-[4]"
-                         )}
-                        />
-                     </Button>
-        )}
+            ) : (
+                <div className={cn(
+                    "h-[92px] w-[92px] rounded-full border-2 flex items-center justify-center bg-white",
+                    isCompleted && "bg-green-500 border-green-500 text-white",
+                    locked && "opacity-50"
+                )}>
+                    <Icon className="h-8 w-8" />
+                </div>
+            )}
             </div>
-         </Link>
-
+        </Link>
     );
-
-}
+};

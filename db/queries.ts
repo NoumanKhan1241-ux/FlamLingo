@@ -55,9 +55,12 @@ export const getUnits = cache(async () => {
     });
     const normalizedData = data.map((unit) => {
         const lessonsWithCompletedStatus = unit.lessons.map((lesson) => {
-            // Use lessonProgress to determine completion
-            const progress = userLessonProgress.find(lp => lp.lessonId === lesson.id && lp.completed);
-            return { ...lesson, completed: !!progress };
+            // Completed if ALL challenges completed OR lessonProgress says completed
+            const allChallengesCompleted = lesson.challenges.length > 0 && lesson.challenges.every((challenge) => {
+                return challenge.challengeProgress && challenge.challengeProgress.length > 0 && challenge.challengeProgress.every((p) => p.completed);
+            });
+            const lpCompleted = !!userLessonProgress.find(lp => lp.lessonId === lesson.id && lp.completed);
+            return { ...lesson, completed: allChallengesCompleted || lpCompleted };
         });
         return{ ...unit, lessons: lessonsWithCompletedStatus };
     });
@@ -91,15 +94,15 @@ export const getCourseById = cache (async(courseId: number) => {
 export const getCourseProgress = cache(async () => {
 
     const {userId} = await auth();
-    const userProgress = await getUserProgress();
+    const userProgressData = await getUserProgress();
 
-    if (!userId || !userProgress?.activeCourseId) {
+    if (!userId || !userProgressData?.activeCourseId) {
         return null;
     }
 
     const unitsInActiveCourse = await db.query.units.findMany({
         orderBy: [asc(units.order)],
-        where: eq(units.courseId, userProgress.activeCourseId),
+        where: eq(units.courseId, userProgressData.activeCourseId),
         with: {
             lessons: {
                 orderBy: (lessons, {asc}) => [asc(lessons.order)],
@@ -115,13 +118,11 @@ export const getCourseProgress = cache(async () => {
                 },
             },
         },
-    
-});
+    });
 
     const firstUncompletedLesson = unitsInActiveCourse.flatMap((unit) => unit.lessons).find((lesson) => {
         return lesson.challenges.some((challenge) => {
-           
-            return !challenge.challengeProgress 
+           return !challenge.challengeProgress 
             || challenge.challengeProgress.length === 0 
             || challenge.challengeProgress.some((progress) => progress.completed === false);
         });
