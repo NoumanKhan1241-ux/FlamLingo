@@ -46,6 +46,9 @@ return(
                           <SidebarItem  label="Phrasebook"
                          iconSrc="/book.png"
                           href="/phrasebook"/>
+                          <SidebarItem  label="Reading"
+                         iconSrc="/reading.png"
+                          href="/reading"/>
                           <SidebarItem  label="Evaluation"
                          iconSrc="/test.png"
                           href="/test"/>
