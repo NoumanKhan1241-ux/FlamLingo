@@ -12,7 +12,7 @@ type Props = {
     selected?: boolean;
     onClick: () => void;
     status?: "correct" | "incorrect" | "none";
-    audioSrc: string;
+    audioSrc?: string | null;
     disabled?: boolean;
     type: typeof challenges.$inferSelect["type"];
 }
@@ -31,13 +31,17 @@ export const Card = ({
     type,
 }: Props) => {
 
-    const [audio, _, controls] = useAudio({src : audioSrc || ""})
+    const hasAudio = audioSrc && audioSrc.trim() !== "";
+    // Use a data URL placeholder to avoid empty src warning, but we won't render it
+    const [audio, _, controls] = useAudio({src : hasAudio ? audioSrc : "data:audio/wav;base64,UklGRigAAABXQVZFZm10IBAAAAABAAEAQB8AAAB9AAACABAAZGF0YQAAAAA="})
          const handleClick = useCallback(() => {
             if(disabled) return;
 
-            controls.play();
+            if(hasAudio && controls) {
+                controls.play();
+            }
             onClick();
-         },[disabled, onClick, controls]);
+         },[disabled, onClick, controls, hasAudio]);
 
          useKey(shortcut, handleClick, {}, [handleClick]);
 
@@ -58,7 +62,7 @@ export const Card = ({
 
         )}
         >
-            {audio}
+            {hasAudio && audio}
             {imageSrc && (
                 <div className="relative aspect-square mb-4 max-h-[80px] lg:max-h-[150px] w-full ">
                     <Image

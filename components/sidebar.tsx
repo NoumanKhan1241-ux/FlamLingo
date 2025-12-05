@@ -1,15 +1,10 @@
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
-import {
-    ClerkLoading,
-    ClerkLoaded,
-    UserButton,
-} from "@clerk/nextjs"
 import { SidebarItem } from "./sidebar-item";
-import {Loader} from 'lucide-react';
 import { getIsAdmin } from "@/lib/admin";
 import AdminSidebarItem from "@/components/admin-sidebar-item";
+import { UserButtonWrapper } from "./user-button-wrapper";
 
 type Props = {
 className?: string;
@@ -47,24 +42,22 @@ return(
                           <SidebarItem  label="Translation"
                          iconSrc="/translation.png"
                           href="/translation"/>
+                          <SidebarItem  label="Pronunciation"
+                         iconSrc="/pronunciation.png"
+                          href="/pronunciation"/>
                           <SidebarItem  label="Phrasebook"
                          iconSrc="/book.png"
                           href="/phrasebook"/>
                           <SidebarItem  label="Reading"
                          iconSrc="/reading.png"
-                          href="/reading"/>
+                          href="/reading"/> 
                         </div>       
                         <div className="p-4 ">
                              {/* Admin button pinned above profile */}
                              <div className="mb-3">
                                <AdminSidebarItem canAccess={isAdmin} />
                              </div>
-                             <ClerkLoading>
-                                <Loader className="h-5 w-5 text-muted-foreground animate-spin"/>
-                             </ClerkLoading>
-                             <ClerkLoaded>
-                                <UserButton afterSwitchSessionUrl="/"/>
-                             </ClerkLoaded>
+                             <UserButtonWrapper />
                         </div>
     </div>
 

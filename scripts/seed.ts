@@ -626,6 +626,31 @@ const main = async () => {
             
             
         ]);
+
+        // Sindhi Lesson 1 (challengeId: 21) options
+        await db.insert(schema.challengeOptions).values([
+            {
+                challengeId: 21, // Sindhi lesson 1 - ا
+                imageSrc: "/mango.png",
+                correct: true,
+                text: "انبُ",
+                audioSrc: "/pashto_cycling.mp3",
+            },
+            {
+                challengeId: 21, // Sindhi lesson 1 - ا
+                imageSrc: "/eye.png",
+                correct: true,
+                text: "اک",
+                audioSrc: "/pashto_cycling.mp3",
+            },
+            {
+                challengeId: 21, // Sindhi lesson 1 - ا
+                imageSrc: "/anar.png",
+                correct: true,
+                text: "انار",
+                audioSrc: "/pashto_cycling.mp3",
+            },
+        ]);
         
         console.log("Seeding finished.");
 
