@@ -1,34 +1,36 @@
 "use client";
 
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
+// import { useState } from "react";
+// import { Button } from "@/components/ui/button";
 
 export default function ReadingPage() {
-  const [lang, setLang] = useState<"pashto" | "sindhi">("pashto");
+  // const [lang, setLang] = useState<"pashto" | "sindhi">("pashto"); // "sindhi" commented out - only pashto used
 
   return (
     <div className="flex flex-col gap-8">
+      {/* Language selector commented out - only Pashto used
       <div className="flex items-center gap-3">
         <Button
-          variant={lang === "pashto" ? "default" : "primaryOutline"}
+          variant={lang === "pashto" ? "default" : "outline"}
           onClick={() => setLang("pashto")}
         >
           Pashto
         </Button>
         <Button
-          variant={lang === "sindhi" ? "default" : "primaryOutline"}
+          variant={lang === "sindhi" ? "default" : "outline"}
           onClick={() => setLang("sindhi")}
         >
           Sindhi
         </Button>
       </div>
+      */}
 
       <div className="text-center">
         <h2 className="text-2xl font-extrabold tracking-tight text-neutral-900">Reading comprehension</h2>
       </div>
 
-      {lang === "pashto" && (
-        <article className="bg-white rounded-xl shadow p-6">
+      {/* Pashto article - always shown */}
+      <article className="bg-white rounded-xl shadow p-6">
           <header className="flex items-start gap-4 flex-wrap">
             <div className="flex-1 min-w-[240px]">
               <h1 className="text-3xl font-extrabold tracking-tight text-neutral-900 mb-1">Pashto (پښتو)</h1>
@@ -138,8 +140,8 @@ export default function ReadingPage() {
             </p>
           </section>
         </article>
-      )}
 
+      {/* Sindhi section commented out - uncomment to re-enable
       {lang === "sindhi" && (
         <article className="bg-white rounded-xl shadow p-6">
           <header className="flex items-start gap-4 flex-wrap">
@@ -210,22 +212,20 @@ export default function ReadingPage() {
               </div>
             </div>
           </section>
-
-          {/* Extended Reading provided by user */}
           <section className="mt-6 space-y-4 leading-7 text-neutral-800">
             <h2 className="text-2xl font-bold">Extended Reading</h2>
             <p>
-              The earliest written evidence of modern Sindhi can be found in a Qur’an translation dated to 883 AD. Following the Umayyad conquest of Sindh (712 AD), Sindhi was among the first Indo‑Aryan languages to experience substantial Persian and Arabic influence. A significant body of Sindhi literature developed in the Medieval period, notably the religious and mystic poetry of Shah Abdul Latif Bhittai (18th century). Modern Sindhi was promoted under British rule after 1843, shaping its post‑1947 status in Pakistan.
+              The earliest written evidence of modern Sindhi can be found in a Qur'an translation dated to 883 AD. Following the Umayyad conquest of Sindh (712 AD), Sindhi was among the first Indo‑Aryan languages to experience substantial Persian and Arabic influence. A significant body of Sindhi literature developed in the Medieval period, notably the religious and mystic poetry of Shah Abdul Latif Bhittai (18th century). Modern Sindhi was promoted under British rule after 1843, shaping its post‑1947 status in Pakistan.
             </p>
             <p>
               Standard Sindhi is based on the prestige dialect around Hyderabad (Vicholi). Other dialects include Uttaradi (north Sindh), Lari (south Sindh), Siroli (north‑most; sometimes transitional with Saraiki), Lasi (Lasbela/Hub/Gwadar; in contact with Balochi), Firaqi (Kachhi plains in NE Balochistan), Thareli (Thar/adjacent Rajasthan), and Sindhi Bhili. The Sindhi Language Authority (Govt. of Sindh) regulates development and promotion of the language.
             </p>
             <h3 className="text-xl font-semibold">History — Origins</h3>
             <p>
-              The name “Sindhi” derives from Sanskrit <em>síndhu</em> (the Indus River). Like other Indo‑Aryan languages, Sindhi descends from Old Indo‑Aryan (Sanskrit) via Middle Indo‑Aryan (Pali, Prakrits, Apabhraṃśa). Proposed specific descent from the Vrācaḍa Apabhraṃśa dialect remains debated. Distinctive New Indo‑Aryan sound changes include development of implosives (e.g., g‑, ‑gg &gt; ɠ), shortening of geminates, voicing after nasals, debuccalization of intervocalic ‑s‑ &gt; ‑h‑ (shared with Saraiki/Punjabi varieties), and various retroflexion processes.
+              The name "Sindhi" derives from Sanskrit <em>síndhu</em> (the Indus River). Like other Indo‑Aryan languages, Sindhi descends from Old Indo‑Aryan (Sanskrit) via Middle Indo‑Aryan (Pali, Prakrits, Apabhraṃśa). Proposed specific descent from the Vrācaḍa Apabhraṃśa dialect remains debated. Distinctive New Indo‑Aryan sound changes include development of implosives (e.g., g‑, ‑gg &gt; ɠ), shortening of geminates, voicing after nasals, debuccalization of intervocalic ‑s‑ &gt; ‑h‑ (shared with Saraiki/Punjabi varieties), and various retroflexion processes.
             </p>
             <p>
-              Early attestations include references by Arabic geographers (al‑Masudi, Ibn Hawqal) noting a distinct “language of Sind.” Buddhist monk Hyech’o also remarks on Sindh’s distinct speech in the early 8th century. Medieval literature features Sufi and Advaita‑influenced poetry (bayt form), romantic epics (e.g., <em>Sassui Punnhun</em>, <em>Sohni Mahiwal</em>, <em>Momal Rano</em>), and culminates in the works of Shah Abdul Latif Bhittai (<em>Shah Jo Risalo</em>).
+              Early attestations include references by Arabic geographers (al‑Masudi, Ibn Hawqal) noting a distinct "language of Sind." Buddhist monk Hyech'o also remarks on Sindh's distinct speech in the early 8th century. Medieval literature features Sufi and Advaita‑influenced poetry (bayt form), romantic epics (e.g., <em>Sassui Punnhun</em>, <em>Sohni Mahiwal</em>, <em>Momal Rano</em>), and culminates in the works of Shah Abdul Latif Bhittai (<em>Shah Jo Risalo</em>).
             </p>
             <h3 className="text-xl font-semibold">British India → Modern Era</h3>
             <p>
@@ -234,31 +234,33 @@ export default function ReadingPage() {
           </section>
         </article>
       )}
+      */}
 
       <section className="bg-white rounded-xl shadow p-6">
         <h2 className="text-xl font-bold mb-3">Comprehension Practice</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
+        <div className="flex justify-center">
+          <div className="w-full max-w-md">
             <h3 className="font-semibold mb-2">Questions (Pashto)</h3>
-            <ol className="list-decimal pl-6 text-neutral-808 space-y-2 text-sm">
+            <ol className="list-decimal pl-6 text-neutral-800 space-y-2 text-sm">
               <li>What language family and branch does Pashto belong to?</li>
               <li>Which writing system does Pashto use?</li>
               <li>Name one major Pashto dialect.</li>
               <li>Where is Pashto primarily spoken?</li>
             </ol>
           </div>
-          <div>
+          {/* <div>
             <h3 className="font-semibold mb-2">Questions (Sindhi)</h3>
             <ol className="list-decimal pl-6 text-neutral-800 space-y-2 text-sm">
-              <li>Summarize Sindhi’s scripts, both primary and historical.</li>
-              <li>Describe two distinctive sound changes in Sindhi’s development.</li>
+              <li>Summarize Sindhi's scripts, both primary and historical.</li>
+              <li>Describe two distinctive sound changes in Sindhi's development.</li>
               <li>Who is considered the greatest poet of Sindhi and what is the major compilation?</li>
               <li>Which dialect forms the basis for Standard Sindhi?</li>
             </ol>
-          </div>
+          </div> */}
         </div>
         <p className="text-xs text-neutral-500 mt-4">
-          References: <a className="underline text-blue-700" href="https://en.wikipedia.org/wiki/Pashto" target="_blank" rel="noreferrer">Pashto</a>, <a className="underline text-blue-700" href="https://en.wikipedia.org/wiki/Sindhi_language" target="_blank" rel="noreferrer">Sindhi language</a>
+          References: <a className="underline text-blue-700" href="https://en.wikipedia.org/wiki/Pashto" target="_blank" rel="noreferrer">Pashto</a>
+          {/* , <a className="underline text-blue-700" href="https://en.wikipedia.org/wiki/Sindhi_language" target="_blank" rel="noreferrer">Sindhi language</a> */}
         </p>
       </section>
     </div>

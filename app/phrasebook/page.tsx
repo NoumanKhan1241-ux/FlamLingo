@@ -9,14 +9,14 @@ const PASHTO_PHRASES = [
   { phrase: "ايا ته په پښتو خبرې کولى شې؟", translation: "Do you speak Pashto?" },
 ];
 
-const SINDHI_PHRASES = [
-  { phrase: "توهان جا ڪهڙا حال آهن؟", translation: "How are you?" },
-  { phrase: "ڏِسَڻَ من ئيِ نَٿا اَچو", translation: "Long time no see" },
-  { phrase: "تُنهِجو نالو ڇا آهي؟", translation: "What's your name?" },
-  { phrase: "توهان ڪٿان جا آهيو؟", translation: "Where are you from?" },
-  { phrase: "توهان ملي ڏاڍو سٺو لڳو", translation: "Pleased to meet you" },
-  { phrase: "ڇا توهان سنڌي آهيو؟", translation: "Do you speak Sindhi?" },
-];
+// const SINDHI_PHRASES = [
+//   { phrase: "توهان جا ڪهڙا حال آهن؟", translation: "How are you?" },
+//   { phrase: "ڏِسَڻَ من ئيِ نَٿا اَچو", translation: "Long time no see" },
+//   { phrase: "تُنهِجو نالو ڇا آهي؟", translation: "What's your name?" },
+//   { phrase: "توهان ڪٿان جا آهيو؟", translation: "Where are you from?" },
+//   { phrase: "توهان ملي ڏاڍو سٺو لڳو", translation: "Pleased to meet you" },
+//   { phrase: "ڇا توهان سنڌي آهيو؟", translation: "Do you speak Sindhi?" },
+// ];
 
 const PASHTO_IDIOMS = [
   { expression: "په خپل مېده کې لوېدل", translit: "Pa khpal meyda ke lwaydal", meaning: "To drown in one’s own soup (to be trapped in your own mistake)", context: "Used when someone suffers due to their own actions" },
@@ -31,22 +31,22 @@ const PASHTO_IDIOMS = [
   { expression: "زړونه خوري", translit: "Zruna khori", meaning: "Eats hearts", context: "Describes someone very charming or attractive" }
 ];
 
-const SINDHI_IDIOMS = [
-  { expression: "پاڻيءَ ۾ مڇي وانگر", translit: "Paani mein machhi wangar", meaning: "Like a fish in water", context: "Feeling comfortable in one’s environment" },
-  { expression: "ڀت سان ٽڪرائڻ", translit: "Bhitt saan takraayun", meaning: "To hit the wall", context: "Facing a hard obstacle or failure" },
-  { expression: "ڪنن ۾ تيل وجھڻ", translit: "Kannan mein teil wjhun", meaning: "To ignore someone", context: "When someone doesn’t listen at all" },
-  { expression: "ٻه ٿالهه هڪ چمچو", translit: "Be thaalah hik chamcho", meaning: "Two plates, one spoon", context: "Inseparable people (always together)" },
-  { expression: "آسمان تان ڪيرا نه ٿا پون", translit: "Aasman taan kira na tha pun", meaning: "Stars don’t fall from the sky", context: "Nothing special happened / relax" },
-  { expression: "چريا ٿي ويو آهين؟", translit: "Chariya thi wiyo aahin?", meaning: "Have you gone crazy?", context: "Friendly slang for 'are you mad?'" },
-  { expression: "ڏٺو نه ٿو وڃي", translit: "Ditho na tho wajeh", meaning: "Can’t even stand to see", context: "Used when someone really dislikes someone/something" },
-  { expression: "تو مهربان، اسي غلام", translit: "To mehrban, asi ghulaam", meaning: "As you wish, boss", context: "Sarcastic for when someone acts bossy" },
-  { expression: "دل تي لاهي ويٺو", translit: "Dil te laahi wey tho", meaning: "Took it to heart", context: "When someone feels hurt emotionally" },
-  { expression: "ٽائيم پاس ڪر", translit: "Time pass kar", meaning: "Chill / hang out", context: "Common casual slang among youth" }
-];
+// const SINDHI_IDIOMS = [
+//   { expression: "پاڻيءَ ۾ مڇي وانگر", translit: "Paani mein machhi wangar", meaning: "Like a fish in water", context: "Feeling comfortable in one's environment" },
+//   { expression: "ڀت سان ٽڪرائڻ", translit: "Bhitt saan takraayun", meaning: "To hit the wall", context: "Facing a hard obstacle or failure" },
+//   { expression: "ڪنن ۾ تيل وجھڻ", translit: "Kannan mein teil wjhun", meaning: "To ignore someone", context: "When someone doesn't listen at all" },
+//   { expression: "ٻه ٿالهه هڪ چمچو", translit: "Be thaalah hik chamcho", meaning: "Two plates, one spoon", context: "Inseparable people (always together)" },
+//   { expression: "آسمان تان ڪيرا نه ٿا پون", translit: "Aasman taan kira na tha pun", meaning: "Stars don't fall from the sky", context: "Nothing special happened / relax" },
+//   { expression: "چريا ٿي ويو آهين؟", translit: "Chariya thi wiyo aahin?", meaning: "Have you gone crazy?", context: "Friendly slang for 'are you mad?'" },
+//   { expression: "ڏٺو نه ٿو وڃي", translit: "Ditho na tho wajeh", meaning: "Can't even stand to see", context: "Used when someone really dislikes someone/something" },
+//   { expression: "تو مهربان، اسي غلام", translit: "To mehrban, asi ghulaam", meaning: "As you wish, boss", context: "Sarcastic for when someone acts bossy" },
+//   { expression: "دل تي لاهي ويٺو", translit: "Dil te laahi wey tho", meaning: "Took it to heart", context: "When someone feels hurt emotionally" },
+//   { expression: "ٽائيم پاس ڪر", translit: "Time pass kar", meaning: "Chill / hang out", context: "Common casual slang among youth" }
+// ];
 
 const today = new Date().getDate();
 const pashtoPhrasesToday = PASHTO_PHRASES.slice((today % PASHTO_PHRASES.length), (today % PASHTO_PHRASES.length) + 2);
-const sindhiPhrasesToday = SINDHI_PHRASES.slice((today % SINDHI_PHRASES.length), (today % SINDHI_PHRASES.length) + 2);
+// const sindhiPhrasesToday = SINDHI_PHRASES.slice((today % SINDHI_PHRASES.length), (today % SINDHI_PHRASES.length) + 2);
 
 export default function PhrasebookPage() {
   return (
@@ -56,9 +56,9 @@ export default function PhrasebookPage() {
           📓 Phrasebook
         </h1>
         <div className="mt-4 mb-10">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="flex justify-center">
             {/* Pashto */}
-            <div>
+            <div className="w-full max-w-md">
               <h3 className="text-lg font-semibold text-blue-700 mb-2 text-center">Pashto Phrases</h3>
               {pashtoPhrasesToday.map((item, idx) => (
                 <div key={idx} className="bg-blue-50 rounded-lg shadow p-4 mb-2 flex flex-col items-center">
@@ -68,7 +68,7 @@ export default function PhrasebookPage() {
               ))}
             </div>
             {/* Sindhi */}
-            <div>
+            {/* <div>
               <h3 className="text-lg font-semibold text-pink-700 mb-2 text-center">Sindhi Phrases</h3>
               {sindhiPhrasesToday.map((item, idx) => (
                 <div key={idx} className="bg-pink-50 rounded-lg shadow p-4 mb-2 flex flex-col items-center">
@@ -76,7 +76,7 @@ export default function PhrasebookPage() {
                   <p className="text-green-800 italic">{item.translation}</p>
                 </div>
               ))}
-            </div>
+            </div> */}
           </div>
         </div>
         <div className="mt-10">
@@ -105,7 +105,7 @@ export default function PhrasebookPage() {
               </tbody>
             </table>
           </div>
-          <h2 className="text-2xl font-bold text-blue-600 text-center mb-6">
+          {/* <h2 className="text-2xl font-bold text-blue-600 text-center mb-6">
             🟦 Sindhi Idioms & Slangs
           </h2>
           <div className="overflow-x-auto rounded-xl shadow">
@@ -129,7 +129,7 @@ export default function PhrasebookPage() {
                 ))}
               </tbody>
             </table>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>
