@@ -7,8 +7,17 @@ const sql = neon(process.env.DATABASE_URL!);
 
 const db = drizzle(sql, {schema});
 
-const main = async () => {
+// Helper function to shuffle array
+function shuffleArray<T>(array: T[]): T[] {
+    const shuffled = [...array];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    return shuffled;
+}
 
+const main = async () => {
     try {
      console.log("Seeding database...");
       await db.delete(schema.courses);
@@ -20,646 +29,450 @@ const main = async () => {
         await db.delete(schema.challengeProgress);
         await db.delete(schema.userSubscription);
 
+        // Insert course
         await db.insert(schema.courses).values([
             {
                 id: 1,
                 title: "Pashto",
                 imageSrc: "/pashtoflag.png",
-
-            },
-            {
-                id: 2,
-                title: "Sindhi",
-                imageSrc: "/sindhiflag.png",
             },
         ]);
 
+        // Insert unit
         await db.insert(schema.units).values([
             {
-                id: 1,  //pashto
+                id: 1,
                 courseId: 1,
-                title: "Unit 1",
-                description: "Learn the basics of Pashto",
+                title: "Pashto Alphabet",
+                description: "Learn Pashto alphabet letters",
                 order: 1,
+            },
+        ]);
+
+        // Create 11 lessons (10 with 3 questions, 1 with 2 questions = 32 questions total)
+        const lessons = [];
+        for (let i = 1; i <= 11; i++) {
+            lessons.push({
+                id: i,
+                unitId: 1,
+                order: i,
+                title: `Lesson ${i}`,
+            });
+        }
+        await db.insert(schema.lessons).values(lessons);
+
+        // Insert challenges directly with id, lessonId, type, order, question
+        await db.insert(schema.challenges).values([
+            // Lesson 1 (3 questions)
+            {
+                id: 1,
+                lessonId: 1,
+                type: "ASSIST" as const,
+                order: 1,
+                question: "Which word starts with ا?",
             },
             {
                 id: 2,
-                courseId: 1,
-                title: "Unit 2",
-                description: "Learn intermediate Pashto",
+                lessonId: 1,
+                type: "ASSIST" as const,
                 order: 2,
+                question: "Which word starts with ب?",
             },
             {
                 id: 3,
-                courseId: 1,
-                title: "Unit 3",
-                description: "Learn advanced Pashto",
+                lessonId: 1,
+                type: "ASSIST" as const,
                 order: 3,
+                question: "Which word starts with پ?",
             },
-            // Sindhi units mirroring Pashto
+            // Lesson 2 (3 questions)
             {
-                id: 4,  //sindhi
-                courseId: 2,
-                title: "Unit 1",
-                description: "Learn the basics of Sindhi",
+                id: 4,
+                lessonId: 2,
+                type: "ASSIST" as const,
                 order: 1,
+                question: "Which word starts with ت?",
             },
             {
                 id: 5,
-                courseId: 2,
-                title: "Unit 2",
-                description: "Learn intermediate Sindhi",
+                lessonId: 2,
+                type: "ASSIST" as const,
                 order: 2,
+                question: "Which word starts with ټ?",
             },
             {
                 id: 6,
-                courseId: 2,
-                title: "Unit 3",
-                description: "Learn advanced Sindhi",
+                lessonId: 2,
+                type: "ASSIST" as const,
                 order: 3,
-            }
-        ]);
-
-        await db.insert(schema.lessons).values([
-            {
-                id: 1, //pashto
-                unitId: 1,        // unit 1
-                order: 1,
-                title: "alphabets",
+                question: "Which word starts with ث?",
             },
-            {
-                id: 2, //pashto
-                unitId: 1,        // unit 1
-                order: 2,
-                title: "words",
-            },
-            {
-                id: 3, //pashto
-                unitId: 1,        // unit 1
-                order: 3,
-                title: "sentences",
-            },
-            {
-                id: 4, //pashto
-                unitId: 1,        // unit 1
-                order: 4,
-                title: "paragraphs",
-            },
-            {
-                id: 5, //pashto
-                unitId: 1,        // unit 1
-                order: 5,
-                title: "alphabets",
-            },
-            {
-                id: 6,
-                unitId: 2,
-                order: 1,
-                title: "Common Phrases",
-            },
+            // Lesson 3 (3 questions)
             {
                 id: 7,
-                unitId: 2,
-                order: 2,
-                title: "Greetings",
+                lessonId: 3,
+                type: "ASSIST" as const,
+                order: 1,
+                question: "Which word starts with ج?",
             },
             {
                 id: 8,
-                unitId: 2,
-                order: 3,
-                title: "Numbers",
+                lessonId: 3,
+                type: "ASSIST" as const,
+                order: 2,
+                question: "Which word starts with چ?",
             },
             {
                 id: 9,
-                unitId: 2,
-                order: 4,
-                title: "Days of Week",
+                lessonId: 3,
+                type: "ASSIST" as const,
+                order: 3,
+                question: "Which word starts with ح?",
             },
+            // Lesson 4 (3 questions)
             {
                 id: 10,
-                unitId: 2,
-                order: 5,
-                title: "Months",
+                lessonId: 4,
+                type: "ASSIST" as const,
+                order: 1,
+                question: "Which word starts with خ?",
             },
             {
                 id: 11,
-                unitId: 3,
-                order: 1,
-                title: "Family Members",
+                lessonId: 4,
+                type: "ASSIST" as const,
+                order: 2,
+                question: "Which word starts with د?",
             },
             {
                 id: 12,
-                unitId: 3,
-                order: 2,
-                title: "Professions",
+                lessonId: 4,
+                type: "ASSIST" as const,
+                order: 3,
+                question: "Which word starts with ذ?",
             },
+            // Lesson 5 (3 questions)
             {
                 id: 13,
-                unitId: 3,
-                order: 3,
-                title: "Weather",
+                lessonId: 5,
+                type: "ASSIST" as const,
+                order: 1,
+                question: "Which word starts with ر?",
             },
             {
                 id: 14,
-                unitId: 3,
-                order: 4,
-                title: "Food Items",
+                lessonId: 5,
+                type: "ASSIST" as const,
+                order: 2,
+                question: "Which word starts with ز?",
             },
             {
                 id: 15,
-                unitId: 3,
-                order: 5,
-                title: "Directions",
+                lessonId: 5,
+                type: "ASSIST" as const,
+                order: 3,
+                question: "Which word starts with ژ?",
             },
-            // Sindhi lessons mirroring Pashto (use unique ids and Sindhi unitIds 4..6)
+            // Lesson 6 (3 questions)
             {
                 id: 16,
-                unitId: 4,        // sindhi unit 1
+                lessonId: 6,
+                type: "ASSIST" as const,
                 order: 1,
-                title: "alphabets",
+                question: "Which word starts with س?",
             },
             {
                 id: 17,
-                unitId: 4,
+                lessonId: 6,
+                type: "ASSIST" as const,
                 order: 2,
-                title: "words",
+                question: "Which word starts with ش?",
             },
             {
                 id: 18,
-                unitId: 4,
+                lessonId: 6,
+                type: "ASSIST" as const,
                 order: 3,
-                title: "sentences",
+                question: "Which word starts with ص?",
             },
+            // Lesson 7 (3 questions)
             {
                 id: 19,
-                unitId: 4,
-                order: 4,
-                title: "paragraphs",
+                lessonId: 7,
+                type: "ASSIST" as const,
+                order: 1,
+                question: "Which word starts with ض?",
             },
             {
                 id: 20,
-                unitId: 4,
-                order: 5,
-                title: "alphabets",
+                lessonId: 7,
+                type: "ASSIST" as const,
+                order: 2,
+                question: "Which word starts with ظ?",
             },
             {
                 id: 21,
-                unitId: 5,
-                order: 1,
-                title: "Common Phrases",
+                lessonId: 7,
+                type: "ASSIST" as const,
+                order: 3,
+                question: "Which word starts with ع?",
             },
+            // Lesson 8 (3 questions)
             {
                 id: 22,
-                unitId: 5,
-                order: 2,
-                title: "Greetings",
+                lessonId: 8,
+                type: "ASSIST" as const,
+                order: 1,
+                question: "Which word starts with غ?",
             },
             {
                 id: 23,
-                unitId: 5,
-                order: 3,
-                title: "Numbers",
+                lessonId: 8,
+                type: "ASSIST" as const,
+                order: 2,
+                question: "Which word starts with ف?",
             },
             {
                 id: 24,
-                unitId: 5,
-                order: 4,
-                title: "Days of Week",
+                lessonId: 8,
+                type: "ASSIST" as const,
+                order: 3,
+                question: "Which word starts with ق?",
             },
+            // Lesson 9 (3 questions)
             {
                 id: 25,
-                unitId: 5,
-                order: 5,
-                title: "Months",
+                lessonId: 9,
+                type: "ASSIST" as const,
+                order: 1,
+                question: "Which word starts with ک?",
             },
             {
                 id: 26,
-                unitId: 6,
-                order: 1,
-                title: "Family Members",
+                lessonId: 9,
+                type: "ASSIST" as const,
+                order: 2,
+                question: "Which word starts with ګ?",
             },
             {
                 id: 27,
-                unitId: 6,
-                order: 2,
-                title: "Professions",
+                lessonId: 9,
+                type: "ASSIST" as const,
+                order: 3,
+                question: "Which word starts with ل?",
             },
+            // Lesson 10 (3 questions)
             {
                 id: 28,
-                unitId: 6,
-                order: 3,
-                title: "Weather",
+                lessonId: 10,
+                type: "ASSIST" as const,
+                order: 1,
+                question: "Which word starts with م?",
             },
             {
                 id: 29,
-                unitId: 6,
-                order: 4,
-                title: "Food Items",
+                lessonId: 10,
+                type: "ASSIST" as const,
+                order: 2,
+                question: "Which word starts with ن?",
             },
             {
                 id: 30,
-                unitId: 6,
-                order: 5,
-                title: "Directions",
-            },
-        ]);
-
-        await db.insert(schema.challenges).values([
-            {
-                id: 1, //pashto
-                lessonId: 1,   //alphabets
-                type: "SELECT",
-                order: 1,
-                question: 'ا',
-            },
-            {
-                id: 2, //pashto
-                lessonId: 1,   //nouns
-                type: "SELECT",
-                order: 2,
-                question: 'آ',
-            },
-            {
-                id: 3, //pashto
-                lessonId: 1,   //nouns
-                type: "SELECT",
-                order: 3,
-                question: 'ب',
-            },
-            {
-                id: 4, //pashto
-                lessonId: 1,   //nouns
-                type: "SELECT",
-                order: 4,
-                question: 'پ',
-            },
-            {
-                id: 5, //pashto
-                lessonId: 1,   //nouns
-                type: "SELECT",
-                order: 5,
-                question: 'ت',
-            },
-            {
-                id: 6,
-                lessonId: 6,
-                type: "SELECT",
-                order: 1,
-                question: "How do you say 'Hello' in Pashto?",
-            },
-            {
-                id: 7,
-                lessonId: 6,
-                type: "SELECT",
-                order: 2,
-                question: "How do you say 'Thank you' in Pashto?",
-            },
-            {
-                id: 8,
-                lessonId: 7,
-                type: "SELECT",
-                order: 1,
-                question: "How do you say 'Good morning' in Pashto?",
-            },
-            {
-                id: 9,
-                lessonId: 7,
-                type: "SELECT",
-                order: 2,
-                question: "How do you say 'Good night' in Pashto?",
-            },
-            {
-                id: 10,
-                lessonId: 8,
-                type: "SELECT",
-                order: 1,
-                question: "What is '1' in Pashto?",
-            },
-            {
-                id: 11,
-                lessonId: 8,
-                type: "SELECT",
-                order: 2,
-                question: "What is '2' in Pashto?",
-            },
-            {
-                id: 12,
-                lessonId: 9,
-                type: "SELECT",
-                order: 1,
-                question: "How do you say 'Monday' in Pashto?",
-            },
-            {
-                id: 13,
-                lessonId: 9,
-                type: "SELECT",
-                order: 2,
-                question: "How do you say 'Tuesday' in Pashto?",
-            },
-            {
-                id: 14,
                 lessonId: 10,
-                type: "SELECT",
-                order: 1,
-                question: "How do you say 'January' in Pashto?",
-            },
-            {
-                id: 15,
-                lessonId: 10,
-                type: "SELECT",
-                order: 2,
-                question: "How do you say 'February' in Pashto?",
-            },
-            {
-                id: 16, //pashto
-                lessonId: 2,   //verbs
-                type: "ASSIST",
-                order: 2,
-                question: '"Drinking water"',
-            },
-            {
-                id: 17, //pashto
-                lessonId: 2,   //verbs
-                type: "SELECT",
+                type: "ASSIST" as const,
                 order: 3,
-                question: 'Which one of these is" not driving"?',
+                question: "Which word starts with ه?",
             },
+            // Lesson 11 (2 questions)
             {
-                id: 18, //pashto
-                lessonId: 3,   //verbs
-                type: "SELECT",
+                id: 31,
+                lessonId: 11,
+                type: "ASSIST" as const,
                 order: 1,
-                question: 'Which one of them is"Running"?',
+                question: "Which word starts with و?",
             },
             {
-                id: 19, //pashto
-                lessonId: 3,   //verbs
-                type: "ASSIST",
+                id: 32,
+                lessonId: 11,
+                type: "ASSIST" as const,
                 order: 2,
-                question: '"Drinking water"',
-            },
-            {
-                id: 20, //pashto
-                lessonId: 3,   //verbs
-                type: "SELECT",
-                order: 3,
-                question: 'Which one of these is" not driving"?',
-            },
-            // --- Sindhi Lesson 1 (unitId: 4, lesson id: 16) mirror with 5 SELECT challenges ---
-            {
-                id: 21, // sindhi
-                lessonId: 16,   // alphabets (sindhi)
-                type: "SELECT",
-                order: 1,
-                question: 'ا',
-            },
-            {
-                id: 22, // sindhi
-                lessonId: 16,
-                type: "SELECT",
-                order: 2,
-                question: 'ب',
-            },
-            {
-                id: 23, // sindhi
-                lessonId: 16,
-                type: "SELECT",
-                order: 3,
-                question: 'ت',
-            },
-            {
-                id: 24, // sindhi
-                lessonId: 16,
-                type: "SELECT",
-                order: 4,
-                question: 'ج',
-            },
-            {
-                id: 25, // sindhi
-                lessonId: 16,
-                type: "SELECT",
-                order: 5,
-                question: 'خ',
+                question: "Which word starts with ی?",
             },
         ]);
 
+        // Insert challenge options explicitly with audio sources for each option
         await db.insert(schema.challengeOptions).values([
-            {
-                challengeId: 1, //ا
-                imageSrc: "/angoor.png",
-                correct: true,
-                text: "انګور",
-                audioSrc: "/pashto_man.mp3",
-            },
-            {
-                challengeId: 1, //ا
-                imageSrc: "/anar.png",
-                correct: true,
-                text: "انار",
-                audioSrc: "/pashto_woman.mp3",
-            },
-            {
-                challengeId: 1, //ا
-                imageSrc: "/obe.png",
-                correct: true,
-                text: "اوبه",
-                audioSrc: "/pashto_robot.mp3",
-            },
-            {
-                challengeId: 2, //آری
-                imageSrc:"/awaz.png",
-                correct: true,
-                text: "آواز",
-                audioSrc: "/pashto_man.mp3",
-            },
-            {
-                challengeId: 2, // آ
-                imageSrc:"/aas.png",
-                correct: true,
-                text: "آس",
-                audioSrc: "/pashto_woman.mp3",
-            },
-            {
-                challengeId: 2, // آ
-                imageSrc:"/aari.png",
-                correct: true,
-                text: "آری",
-                audioSrc: "/pashto_woman.mp3",
-            },
-            {
-                challengeId: 3, //ب
-                imageSrc: "/baagh.png",
-                correct: true,
-                text: "باغ",
-                audioSrc: "/pashto_man.mp3",
-            },
-            {
-                challengeId: 3, //ب
-                imageSrc: "/baran.png",
-                correct: true,
-                text: "باران",
-                audioSrc: "/pashto_woman.mp3",
-            },
-            {
-                challengeId: 3, //ب
-                imageSrc: "/bicycle.png",
-                correct: true,
-                text: "بايسکل",
-                audioSrc: "/pashto_robot.mp3",
-            },
-            {
-                challengeId: 4, //پ
-                imageSrc: "/park.png",
-                correct: true,
-                text: "پارک",
-                audioSrc: "/pashto_man.mp3",
-            },
-            {
-                challengeId: 4, //پ
-                imageSrc: "/paak.png",
-                correct: true,
-                text: "پاک",
-                audioSrc: "/pashto_woman.mp3",
-            },
-            {
-                challengeId: 4, //پ
-                imageSrc: "/pesho.png",
-                correct: true,
-                text: "پیشو",
-                audioSrc: "/pashto_robot.mp3",
-            },
-            {
-                challengeId: 5, //ت
-                imageSrc: "/toot.png",
-                correct: true,
-                text: "توت",
-                audioSrc: "/pashto_man.mp3",
-            },
-            {
-                challengeId: 5, //ت
-                imageSrc: "/trazu.png",
-                correct: true,
-                text: "ترازو",
-                audioSrc: "/pashto_woman.mp3",
-            },
-            {
-                challengeId: 5, //ت
-                imageSrc: "/taaj.png",
-                correct: true,
-                text: "تاج",
-                audioSrc: "/pashto_robot.mp3",
-            },
+            // Challenge 1 - ا (alif)
+            { challengeId: 1, text: "کور", correct: false, audioSrc: "/alif1.m4a" },
+            { challengeId: 1, text: "کتاب", correct: false, audioSrc: "/alif2.m4a" },
+            { challengeId: 1, text: "اوبه", correct: true, audioSrc: "/alif3.m4a" },
+            { challengeId: 1, text: "بازار", correct: false, audioSrc: "/alif4.m4a" },
+            // Challenge 2 - ب (bay)
+            { challengeId: 2, text: "ماشوم", correct: false, audioSrc: "/bay1.m4a" },
+            { challengeId: 2, text: "بازار", correct: true, audioSrc: "/bay2.m4a" },
+            { challengeId: 2, text: "کور", correct: false, audioSrc: "/bay3.m4a" },
+            { challengeId: 2, text: "سړک", correct: false, audioSrc: "/bay4.m4a" },
+            // Challenge 3 - پ (Pay)
+            { challengeId: 3, text: "کتاب", correct: false, audioSrc: "/Pay1.m4a" },
+            { challengeId: 3, text: "پلار", correct: true, audioSrc: "/Pay2.m4a" },
+            { challengeId: 3, text: "ښوونځی", correct: false, audioSrc: "/Pay3.m4a" },
+            { challengeId: 3, text: "ملګری", correct: false, audioSrc: "/Pay4.m4a" },
+            // Challenge 4 - ت (Tay)
+            { challengeId: 4, text: "کور", correct: false, audioSrc: "/Tay1.m4a" },
+            { challengeId: 4, text: "تاريخ", correct: true, audioSrc: "/Tay2.m4a" },
+            { challengeId: 4, text: "اوبه", correct: false, audioSrc: "/Tay3.m4a" },
+            { challengeId: 4, text: "بازار", correct: false, audioSrc: "/Tay4.m4a" },
+            // Challenge 5 - ټ (Ttay)
+            { challengeId: 5, text: "سړی", correct: false, audioSrc: "/Ttay1.m4a" },
+            { challengeId: 5, text: "ټوپک", correct: true, audioSrc: "/Ttay2.m4a" },
+            { challengeId: 5, text: "کتاب", correct: false, audioSrc: "/Ttay3.m4a" },
+            { challengeId: 5, text: "ښوونځی", correct: false, audioSrc: "/Ttay4.m4a" },
+            // Challenge 6 - ث (Say)
+            { challengeId: 6, text: "ماشوم", correct: false, audioSrc: "/Say1.m4a" },
+            { challengeId: 6, text: "کتاب", correct: false, audioSrc: "/Say2.m4a" },
+            { challengeId: 6, text: "ثواب", correct: true, audioSrc: "/Say3.m4a" },
+            { challengeId: 6, text: "بازار", correct: false, audioSrc: "/Say4.m4a" },
+            // Challenge 7 - ج (Jeem)
+            { challengeId: 7, text: "کتاب", correct: false, audioSrc: "/Jeem1.m4a" },
+            { challengeId: 7, text: "جرګه", correct: true, audioSrc: "/Jeem2.m4a" },
+            { challengeId: 7, text: "کور", correct: false, audioSrc: "/Jeem3.m4a" },
+            { challengeId: 7, text: "اوبه", correct: false, audioSrc: "/Jeem4.m4a" },
+            // Challenge 8 - چ (Chay)
+            { challengeId: 8, text: "سړک", correct: false, audioSrc: "/Chay1.m4a" },
+            { challengeId: 8, text: "چای", correct: true, audioSrc: "/Chay2.m4a" },
+            { challengeId: 8, text: "بازار", correct: false, audioSrc: "/Chay3.m4a" },
+            { challengeId: 8, text: "ښوونځی", correct: false, audioSrc: "/Chay4.m4a" },
+            // Challenge 9 - ح (Hay)
+            { challengeId: 9, text: "کتاب", correct: false, audioSrc: "/Hay1.m4a" },
+            { challengeId: 9, text: "ماشوم", correct: false, audioSrc: "/Hay2.m4a" },
+            { challengeId: 9, text: "حوصله", correct: true, audioSrc: "/Hay3.m4a" },
+            { challengeId: 9, text: "کور", correct: false, audioSrc: "/Hay4.m4a" },
+            // Challenge 10 - خ (Khay)
+            { challengeId: 10, text: "بازار", correct: false, audioSrc: "/Khay1.m4a" },
+            { challengeId: 10, text: "ښوونځی", correct: false, audioSrc: "/Khay2.m4a" },
+            { challengeId: 10, text: "خوب", correct: true, audioSrc: "/Khay3.m4a" },
+            { challengeId: 10, text: "کتاب", correct: false, audioSrc: "/Khay4.m4a" },
+            // Challenge 11 - د (Daal)
+            { challengeId: 11, text: "ماشوم", correct: false, audioSrc: "/Daal1.m4a" },
+            { challengeId: 11, text: "دفتر", correct: true, audioSrc: "/Daal2.m4a" },
+            { challengeId: 11, text: "کتاب", correct: false, audioSrc: "/Daal3.m4a" },
+            { challengeId: 11, text: "کور", correct: false, audioSrc: "/Daal4.m4a" },
+            // Challenge 12 - ذ (Zaal)
+            { challengeId: 12, text: "بازار", correct: false, audioSrc: "/Zaal1.m4a" },
+            { challengeId: 12, text: "کتاب", correct: false, audioSrc: "/Zaal2.m4a" },
+            { challengeId: 12, text: "ذهن", correct: true, audioSrc: "/Zaal3.m4a" },
+            { challengeId: 12, text: "کور", correct: false, audioSrc: "/Zaal4.m4a" },
+            // Challenge 13 - ر (Raay)
+            { challengeId: 13, text: "سړک", correct: false, audioSrc: "/Raay1.m4a" },
+            { challengeId: 13, text: "کتاب", correct: false, audioSrc: "/Raay2.m4a" },
+            { challengeId: 13, text: "رڼا", correct: true, audioSrc: "/Raay3.m4a" },
+            { challengeId: 13, text: "ماشوم", correct: false, audioSrc: "/Raay4.m4a" },
+            // Challenge 14 - ز (Zay)
+            { challengeId: 14, text: "بازار", correct: false, audioSrc: "/Zay1.m4a" },
+            { challengeId: 14, text: "ژوند", correct: true, audioSrc: "/Zay2.m4a" },
+            { challengeId: 14, text: "کور", correct: false, audioSrc: "/Zay3.m4a" },
+            { challengeId: 14, text: "کتاب", correct: false, audioSrc: "/Zay4.m4a" },
+            // Challenge 15 - ژ (Zhay)
+            { challengeId: 15, text: "سړی", correct: false, audioSrc: "/Zhay1.m4a" },
+            { challengeId: 15, text: "ژبه", correct: true, audioSrc: "/Zhay2.m4a" },
+            { challengeId: 15, text: "کتاب", correct: false, audioSrc: "/Zhay3.m4a" },
+            { challengeId: 15, text: "بازار", correct: false, audioSrc: "/Zhay4.m4a" },
+            // Challenge 16 - س (Seen)
+            { challengeId: 16, text: "ښوونځی", correct: false, audioSrc: "/Seen1.m4a" },
+            { challengeId: 16, text: "سړی", correct: true, audioSrc: "/Seen2.m4a" },
+            { challengeId: 16, text: "کور", correct: false, audioSrc: "/Seen3.m4a" },
+            { challengeId: 16, text: "کتاب", correct: false, audioSrc: "/Seen4.m4a" },
+            // Challenge 17 - ش (Sheen)
+            { challengeId: 17, text: "بازار", correct: false, audioSrc: "/Sheen1.m4a" },
+            { challengeId: 17, text: "ښوونځی", correct: true, audioSrc: "/Sheen2.m4a" },
+            { challengeId: 17, text: "کتاب", correct: false, audioSrc: "/Sheen3.m4a" },
+            { challengeId: 17, text: "کور", correct: false, audioSrc: "/Sheen4.m4a" },
+            // Challenge 18 - ص (Suaad)
+            { challengeId: 18, text: "کور", correct: false, audioSrc: "/Suaad1.m4a" },
+            { challengeId: 18, text: "صبر", correct: true, audioSrc: "/Suaad2.m4a" },
+            { challengeId: 18, text: "بازار", correct: false, audioSrc: "/Suaad3.m4a" },
+            { challengeId: 18, text: "کتاب", correct: false, audioSrc: "/Suaad4.m4a" },
+            // Challenge 19 - ض (Zuaad)
+            { challengeId: 19, text: "کتاب", correct: false, audioSrc: "/Toay1.m4a" },
+            { challengeId: 19, text: "بازار", correct: false, audioSrc: "/Toay2.m4a" },
+            { challengeId: 19, text: "ضمير", correct: true, audioSrc: "/Toay3.m4a" },
+            { challengeId: 19, text: "کور", correct: false, audioSrc: "/Toay4.m4a" },
+            // Challenge 20 - ظ (Zoay)
+            { challengeId: 20, text: "ظلم", correct: true, audioSrc: "/Zoay1.m4a" },
+            { challengeId: 20, text: "موټر", correct: false, audioSrc: "/Zoay2.m4a" },
+            { challengeId: 20, text: "نوم", correct: false, audioSrc: "/Zoay3.m4a" },
+            { challengeId: 20, text: "اوبه", correct: false, audioSrc: "/Zoay4.m4a" },
+            // Challenge 21 - ع (Ain)
+            { challengeId: 21, text: "علم", correct: true, audioSrc: "/Ain1.m4a" },
+            { challengeId: 21, text: "کور", correct: false, audioSrc: "/Ain2.m4a" },
+            { challengeId: 21, text: "بازار", correct: false, audioSrc: "/Ain3.m4a" },
+            { challengeId: 21, text: "سړک", correct: false, audioSrc: "/Ain4.m4a" },
+            // Challenge 22 - غ (Ghain)
+            { challengeId: 22, text: "غږ", correct: true, audioSrc: "/Ghain1.m4a" },
+            { challengeId: 22, text: "کلي", correct: false, audioSrc: "/Ghain2.m4a" },
+            { challengeId: 22, text: "ښوونځی", correct: false, audioSrc: "/Ghain3.m4a" },
+            { challengeId: 22, text: "ماشوم", correct: false, audioSrc: "/Ghain4.m4a" },
+            // Challenge 23 - ف (Fay)
+            { challengeId: 23, text: "فصل", correct: true, audioSrc: "/Fay1.m4a" },
+            { challengeId: 23, text: "غر", correct: false, audioSrc: "/Fay2.m4a" },
+            { challengeId: 23, text: "وطن", correct: false, audioSrc: "/Fay3.m4a" },
+            { challengeId: 23, text: "ملګری", correct: false, audioSrc: "/Fay4.m4a" },
+            // Challenge 24 - ق (Qaf)
+            { challengeId: 24, text: "قوم", correct: true, audioSrc: "/Qaf1.m4a" },
+            { challengeId: 24, text: "کور", correct: false, audioSrc: "/Qaf2.m4a" },
+            { challengeId: 24, text: "بازار", correct: false, audioSrc: "/Qaf3.m4a" },
+            { challengeId: 24, text: "اوبه", correct: false, audioSrc: "/Qaf4.m4a" },
+            // Challenge 25 - ک (Kaaf)
+            { challengeId: 25, text: "کتاب", correct: true, audioSrc: "/Kaaf1.m4a" },
+            { challengeId: 25, text: "غر", correct: false, audioSrc: "/Kaaf2.m4a" },
+            { challengeId: 25, text: "هوا", correct: false, audioSrc: "/Kaaf3.m4a" },
+            { challengeId: 25, text: "نوم", correct: false, audioSrc: "/Kaaf4.m4a" },
+            // Challenge 26 - ګ (Gaf)
+            { challengeId: 26, text: "ګل", correct: true, audioSrc: "/Gaf1.m4a" },
+            { challengeId: 26, text: "بازار", correct: false, audioSrc: "/Gaf2.m4a" },
+            { challengeId: 26, text: "موټر", correct: false, audioSrc: "/Gaf3.m4a" },
+            { challengeId: 26, text: "سړک", correct: false, audioSrc: "/Gaf4.m4a" },
+            // Challenge 27 - ل (Lam)
+            { challengeId: 27, text: "لار", correct: true, audioSrc: "/Lam1.m4a" },
+            { challengeId: 27, text: "کور", correct: false, audioSrc: "/Lam2.m4a" },
+            { challengeId: 27, text: "ماشوم", correct: false, audioSrc: "/Lam3.m4a" },
+            { challengeId: 27, text: "غر", correct: false, audioSrc: "/Lam4.m4a" },
+            // Challenge 28 - م (Meem)
+            { challengeId: 28, text: "مېز", correct: true, audioSrc: "/Meem1.m4a" },
+            { challengeId: 28, text: "وطن", correct: false, audioSrc: "/Meem2.m4a" },
+            { challengeId: 28, text: "کتاب", correct: false, audioSrc: "/Meem3.m4a" },
+            { challengeId: 28, text: "اوبه", correct: false, audioSrc: "/Meem4.m4a" },
+            // Challenge 29 - ن (Nun)
+            { challengeId: 29, text: "نوم", correct: true, audioSrc: "/Nun1.m4a" },
+            { challengeId: 29, text: "غر", correct: false, audioSrc: "/Nun2.m4a" },
+            { challengeId: 29, text: "ښوونځی", correct: false, audioSrc: "/Nun3.m4a" },
+            { challengeId: 29, text: "بازار", correct: false, audioSrc: "/Nun4.m4a" },
+            // Challenge 30 - ه (Ha)
+            { challengeId: 30, text: "هوا", correct: true, audioSrc: "/Ha1.m4a" },
+            { challengeId: 30, text: "کور", correct: false, audioSrc: "/Ha2.m4a" },
+            { challengeId: 30, text: "ملګری", correct: false, audioSrc: "/Ha3.m4a" },
+            { challengeId: 30, text: "کتاب", correct: false, audioSrc: "/Ha4.m4a" },
+            // Challenge 31 - و (Wow)
+            { challengeId: 31, text: "وطن", correct: true, audioSrc: "/Wow1.m4a" },
+            { challengeId: 31, text: "غر", correct: false, audioSrc: "/Wow2.m4a" },
+            { challengeId: 31, text: "ماشوم", correct: false, audioSrc: "/Wow3.m4a" },
+            { challengeId: 31, text: "سړک", correct: false, audioSrc: "/Wow4.m4a" },
+            // Challenge 32 - ی (Ya)
+            { challengeId: 32, text: "یار", correct: true, audioSrc: "/Ya1.m4a" },
+            { challengeId: 32, text: "کتاب", correct: false, audioSrc: "/Ya2.m4a" },
+            { challengeId: 32, text: "موټر", correct: false, audioSrc: "/Ya3.m4a" },
+            { challengeId: 32, text: "کور", correct: false, audioSrc: "/Ya4.m4a" },
         ]);
 
-        await db.insert(schema.challengeOptions).values([
-            {
-                challengeId: 6, //which one of them is Running
-                imageSrc: "/driving_1.png",
-                correct: false,
-                text: "موټر چلول",
-                audioSrc: "/pashto_driving.mp3",
-            },
-            {
-                challengeId: 6, //which one of them is Running
-                imageSrc: "/running.png",
-                correct: true,
-                text: "منډه",
-                audioSrc: "/pashto_running.mp3",
-            },
-            {
-                challengeId: 6, //which one of them is Running
-                imageSrc: "/cycling.png",
-                correct: false,
-                text: "سایکل چلول",
-                audioSrc: "/cycling_pashto.mp3",
-            },
-            
-            
-        ]);
-
-        await db.insert(schema.challengeOptions).values([
-            {
-                challengeId: 16, // drinking water
-                correct: true,
-                text: "اوبه څکل",
-                audioSrc: "/pashto_drinking_water.mp3",
-            },
-            {
-                challengeId: 16, // drinking water
-                correct: false,
-                text: "منډه",
-                audioSrc: "/pashto_running.mp3",
-            },
-            {
-                challengeId: 16, // drinking water
-                correct: false,
-                text: "موټر چلول",
-                audioSrc: "/pashto_driving.mp3",
-            },
-            
-            
-            
-        ]);
-
-        await db.insert(schema.challengeOptions).values([
-            {
-                challengeId: 17, //which one of these is not driving
-                imageSrc: "/driving_1.png",
-                correct: false,
-                text: "موټر چلول",
-                audioSrc: "/pashto_driving.mp3",
-            },
-            {
-                challengeId: 17, //which one of these is not driving
-                imageSrc: "/driving_2.png",
-                correct: false,
-                text: "موټر چلول",
-                audioSrc: "/pashto_driving.mp3",
-            },
-            {
-                challengeId: 17, //which one of these is not driving
-                imageSrc: "/cycling.png",
-                correct: true,
-                text: "سایکل چلول",
-                audioSrc: "/pashto_cycling.mp3",
-            },
-            
-            
-        ]);
-
-        // Sindhi Lesson 1 (challengeId: 21) options
-        await db.insert(schema.challengeOptions).values([
-            {
-                challengeId: 21, // Sindhi lesson 1 - ا
-                imageSrc: "/mango.png",
-                correct: true,
-                text: "انبُ",
-                audioSrc: "/pashto_cycling.mp3",
-            },
-            {
-                challengeId: 21, // Sindhi lesson 1 - ا
-                imageSrc: "/eye.png",
-                correct: true,
-                text: "اک",
-                audioSrc: "/pashto_cycling.mp3",
-            },
-            {
-                challengeId: 21, // Sindhi lesson 1 - ا
-                imageSrc: "/anar.png",
-                correct: true,
-                text: "انار",
-                audioSrc: "/pashto_cycling.mp3",
-            },
-        ]);
-        
-        console.log("Seeding finished.");
+        console.log("Seeding finished successfully!");
+        console.log(`Created 11 lessons with 32 challenges and 128 challenge options`);
 
     } catch (error) {
         console.error(error);
         throw new Error("Failed to seed database");
-
     }
-    
 };
 
 main();
+
+

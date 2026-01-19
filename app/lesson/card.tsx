@@ -1,8 +1,8 @@
 import { cn } from "@/lib/utils";
 import { challenges } from "@/db/schema";
-import { useCallback } from "react";
+import { useCallback, useRef } from "react";
 import Image from "next/image";
-import { useAudio, useKey } from "react-use";
+import { useKey } from "react-use";
 
 type Props = {
     id: number;
@@ -31,17 +31,76 @@ export const Card = ({
     type,
 }: Props) => {
 
-    const hasAudio = audioSrc && audioSrc.trim() !== "";
-    // Use a data URL placeholder to avoid empty src warning, but we won't render it
-    const [audio, _, controls] = useAudio({src : hasAudio ? audioSrc : "data:audio/wav;base64,UklGRigAAABXQVZFZm10IBAAAAABAAEAQB8AAAB9AAACABAAZGF0YQAAAAA="})
-         const handleClick = useCallback(() => {
-            if(disabled) return;
+    const hasAudio = audioSrc && typeof audioSrc === 'string' && audioSrc.trim() !== "";
+    const audioRef = useRef<HTMLAudioElement>(null);
+    const audioErrorRef = useRef<boolean>(false);
+    
+    // Debug: Log audioSrc when component renders
+    if (hasAudio) {
+        console.log("Card rendered with audioSrc:", audioSrc, "for text:", text);
+    }
 
-            if(hasAudio && controls) {
-                controls.play();
+    const handleClick = useCallback(async () => {
+        if(disabled) return;
+
+        // Always call onClick first to ensure selection works even if audio fails
+        onClick();
+
+        // Try to play audio on user click
+        if(hasAudio && audioRef.current && audioSrc) {
+            const audio = audioRef.current;
+            
+            // Debug logging (remove in production if needed)
+            console.log("Attempting to play audio:", audioSrc);
+            console.log("Audio readyState:", audio.readyState);
+            console.log("Audio error:", audio.error);
+            
+            try {
+                // Reset to beginning
+                audio.currentTime = 0;
+                
+                // Load audio if needed
+                if (audio.readyState === 0 || audio.readyState === 1) {
+                    audio.load();
+                }
+                
+                // Function to actually play the audio
+                const playAudio = async () => {
+                    if (!audioRef.current) return;
+                    
+                    try {
+                        audioRef.current.currentTime = 0;
+                        await audioRef.current.play();
+                        console.log("Audio playing successfully:", audioSrc);
+                    } catch (playError) {
+                        console.error("Play error:", playError);
+                    }
+                };
+                
+                // If audio is ready, play immediately
+                if (audio.readyState >= 2) {
+                    await playAudio();
+                } else {
+                    // Wait for audio to be ready
+                    const handleCanPlay = () => {
+                        playAudio();
+                    };
+                    
+                    audio.addEventListener('canplay', handleCanPlay, { once: true });
+                    audio.addEventListener('canplaythrough', handleCanPlay, { once: true });
+                    
+                    // Also try after a short delay as fallback
+                    setTimeout(() => {
+                        if (audioRef.current && audioRef.current.readyState >= 2) {
+                            playAudio();
+                        }
+                    }, 100);
+                }
+            } catch (error) {
+                console.error("Audio error:", error);
             }
-            onClick();
-         },[disabled, onClick, controls, hasAudio]);
+        }
+    },[disabled, onClick, hasAudio, audioSrc]);
 
          useKey(shortcut, handleClick, {}, [handleClick]);
 
@@ -62,7 +121,27 @@ export const Card = ({
 
         )}
         >
-            {hasAudio && audio}
+            {hasAudio && audioSrc && (
+                <audio 
+                    ref={audioRef} 
+                    src={audioSrc} 
+                    preload="metadata"
+                    onError={(e) => {
+                        // Mark that this audio has an error
+                        audioErrorRef.current = true;
+                        const audioElement = e.currentTarget;
+                        console.warn("Audio error for:", audioSrc, "Error:", audioElement.error?.message);
+                    }}
+                    onLoadedMetadata={() => {
+                        // Audio loaded successfully, reset error flag
+                        audioErrorRef.current = false;
+                        console.log("Audio metadata loaded:", audioSrc);
+                    }}
+                    onCanPlay={() => {
+                        console.log("Audio can play:", audioSrc);
+                    }}
+                />
+            )}
             {imageSrc && (
                 <div className="relative aspect-square mb-4 max-h-[80px] lg:max-h-[150px] w-full ">
                     <Image
