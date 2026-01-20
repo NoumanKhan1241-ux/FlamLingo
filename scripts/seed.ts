@@ -49,7 +49,7 @@ const main = async () => {
             },
         ]);
 
-        // Create 11 lessons (10 with 3 questions, 1 with 2 questions = 32 questions total)
+        // Create 11 lessons (10 with 3 questions, 1 with 2 questions = 32 questions total for alphabet)
         const lessons = [];
         for (let i = 1; i <= 11; i++) {
             lessons.push({
@@ -60,6 +60,119 @@ const main = async () => {
             });
         }
         await db.insert(schema.lessons).values(lessons);
+
+        // Additional units for higher levels (12–50)
+        await db.insert(schema.units).values([
+            {
+                id: 2,
+                courseId: 1,
+                title: "Everyday Basics",
+                description: "Numbers, colors, weather, routine, health",
+                order: 2,
+            },
+            {
+                id: 3,
+                courseId: 1,
+                title: "Daily Life & Movement",
+                description: "Directions, shopping, transport, politeness, time",
+                order: 3,
+            },
+            {
+                id: 4,
+                courseId: 1,
+                title: "Reasons & Descriptions",
+                description: "Future tense, reasons, comparisons, people, house",
+                order: 4,
+            },
+            {
+                id: 5,
+                courseId: 1,
+                title: "Modern Life & Communication",
+                description: "Technology, education, work, social talk, complex sentences",
+                order: 5,
+            },
+            {
+                id: 6,
+                courseId: 1,
+                title: "Stories & Social Norms",
+                description: "Passive voice, storytelling, opinions, idioms, norms",
+                order: 6,
+            },
+            {
+                id: 7,
+                courseId: 1,
+                title: "Culture & Emotions",
+                description: "Culture, emotions, conflict, media, formal language",
+                order: 7,
+            },
+            {
+                id: 8,
+                courseId: 1,
+                title: "Academic & Professional",
+                description: "Professional talk, academic language, literature, dialects, proverbs",
+                order: 8,
+            },
+            {
+                id: 9,
+                courseId: 1,
+                title: "Society & Ideas",
+                description: "Society, history, abstract ideas, real-life use",
+                order: 9,
+            },
+        ]);
+
+        // Lessons for levels 12–50 (each level is one lesson with 2 questions)
+        const extraLessons = [
+            // Unit 2 – Everyday Basics (levels 12–16)
+            { id: 12, unitId: 2, order: 1, title: "Level 12 – Numbers" },
+            { id: 13, unitId: 2, order: 2, title: "Level 13 – Colors" },
+            { id: 14, unitId: 2, order: 3, title: "Level 14 – Weather" },
+            { id: 15, unitId: 2, order: 4, title: "Level 15 – Daily Routine" },
+            { id: 16, unitId: 2, order: 5, title: "Level 16 – Health" },
+            // Unit 3 – Daily Life & Movement (levels 17–21)
+            { id: 17, unitId: 3, order: 1, title: "Level 17 – Directions" },
+            { id: 18, unitId: 3, order: 2, title: "Level 18 – Shopping" },
+            { id: 19, unitId: 3, order: 3, title: "Level 19 – Transport" },
+            { id: 20, unitId: 3, order: 4, title: "Level 20 – Politeness" },
+            { id: 21, unitId: 3, order: 5, title: "Level 21 – Past Tense" },
+            // Unit 4 – Reasons & Descriptions (levels 22–26)
+            { id: 22, unitId: 4, order: 1, title: "Level 22 – Future Tense" },
+            { id: 23, unitId: 4, order: 2, title: "Level 23 – Reasons" },
+            { id: 24, unitId: 4, order: 3, title: "Level 24 – Comparisons" },
+            { id: 25, unitId: 4, order: 4, title: "Level 25 – Describing People" },
+            { id: 26, unitId: 4, order: 5, title: "Level 26 – House" },
+            // Unit 5 – Modern Life & Communication (levels 27–31)
+            { id: 27, unitId: 5, order: 1, title: "Level 27 – Technology" },
+            { id: 28, unitId: 5, order: 2, title: "Level 28 – Education" },
+            { id: 29, unitId: 5, order: 3, title: "Level 29 – Work" },
+            { id: 30, unitId: 5, order: 4, title: "Level 30 – Social Talk" },
+            { id: 31, unitId: 5, order: 5, title: "Level 31 – Complex Sentences" },
+            // Unit 6 – Stories & Social Norms (levels 32–36)
+            { id: 32, unitId: 6, order: 1, title: "Level 32 – Passive Voice" },
+            { id: 33, unitId: 6, order: 2, title: "Level 33 – Storytelling" },
+            { id: 34, unitId: 6, order: 3, title: "Level 34 – Opinions" },
+            { id: 35, unitId: 6, order: 4, title: "Level 35 – Idioms" },
+            { id: 36, unitId: 6, order: 5, title: "Level 36 – Social Norms" },
+            // Unit 7 – Culture & Emotions (levels 37–41)
+            { id: 37, unitId: 7, order: 1, title: "Level 37 – Culture" },
+            { id: 38, unitId: 7, order: 2, title: "Level 38 – Emotions" },
+            { id: 39, unitId: 7, order: 3, title: "Level 39 – Conflict" },
+            { id: 40, unitId: 7, order: 4, title: "Level 40 – Media" },
+            { id: 41, unitId: 7, order: 5, title: "Level 41 – Formal Language" },
+            // Unit 8 – Academic & Professional (levels 42–46)
+            { id: 42, unitId: 8, order: 1, title: "Level 42 – Professional Talk" },
+            { id: 43, unitId: 8, order: 2, title: "Level 43 – Academic Language" },
+            { id: 44, unitId: 8, order: 3, title: "Level 44 – Literature" },
+            { id: 45, unitId: 8, order: 4, title: "Level 45 – Dialects" },
+            { id: 46, unitId: 8, order: 5, title: "Level 46 – Proverbs" },
+            // Unit 9 – Society & Ideas (levels 47–50)
+            { id: 47, unitId: 9, order: 1, title: "Level 47 – Society" },
+            { id: 48, unitId: 9, order: 2, title: "Level 48 – History" },
+            { id: 49, unitId: 9, order: 3, title: "Level 49 – Abstract Ideas" },
+            { id: 50, unitId: 9, order: 4, title: "Level 50 – Real-Life Use" },
+        ];
+
+        await db.insert(schema.lessons).values(extraLessons);
 
         // Insert challenges directly with id, lessonId, type, order, question
         await db.insert(schema.challenges).values([
@@ -201,7 +314,7 @@ const main = async () => {
                 lessonId: 7,
                 type: "ASSIST" as const,
                 order: 1,
-                question: "Which word starts with ض?",
+                question: "Which word starts with ط?",
             },
             {
                 id: 20,
@@ -300,7 +413,7 @@ const main = async () => {
             },
         ]);
 
-        // Insert challenge options explicitly with audio sources for each option
+        // Insert challenge options explicitly with audio sources for each option (alphabet)
         await db.insert(schema.challengeOptions).values([
             // Challenge 1 - ا (alif)
             { challengeId: 1, text: "کور", correct: false, audioSrc: "/alif1.m4a" },
@@ -464,8 +577,724 @@ const main = async () => {
             { challengeId: 32, text: "کور", correct: false, audioSrc: "/Ya4.m4a" },
         ]);
 
+        // Higher-level questions (Levels 12–50), each level has 2 questions (ASSIST)
+        const advancedLevels = [
+            // Level 12 – Numbers
+            {
+                level: 12,
+                questions: [
+                    {
+                        prompt: 'What is the meaning of "درې"?',
+                        options: ["One", "Two", "Three", "Four"],
+                        correctIndex: 2, // Three
+                    },
+                    {
+                        prompt: "Which word means ten?",
+                        options: ["پنځه", "لس", "اوه", "اته"],
+                        correctIndex: 1, // لس
+                    },
+                ],
+            },
+            // Level 13 – Colors
+            {
+                level: 13,
+                questions: [
+                    {
+                        prompt: '"سور" means:',
+                        options: ["Blue", "Red", "Green", "Black"],
+                        correctIndex: 1, // Red
+                    },
+                    {
+                        prompt: "Which word means white?",
+                        options: ["تور", "ژېړ", "شين", "سپين"],
+                        correctIndex: 3, // سپين
+                    },
+                ],
+            },
+            // Level 14 – Weather
+            {
+                level: 14,
+                questions: [
+                    {
+                        prompt: '"باران" means:',
+                        options: ["Wind", "Snow", "Rain", "Cloud"],
+                        correctIndex: 2, // Rain
+                    },
+                    {
+                        prompt: "Which word means cold?",
+                        options: ["ګرم", "يخ", "لوند", "وچ"],
+                        correctIndex: 1, // يخ
+                    },
+                ],
+            },
+            // Level 15 – Daily Routine
+            {
+                level: 15,
+                questions: [
+                    {
+                        prompt: '"زه سهار پاڅېږم" means:',
+                        options: [
+                            "I sleep at night",
+                            "I wake up in the morning",
+                            "I eat food",
+                            "I go home",
+                        ],
+                        correctIndex: 1,
+                    },
+                    {
+                        prompt: "Which word means sleep?",
+                        options: ["کار", "لوبه", "خوب", "تګ"],
+                        correctIndex: 2, // خوب
+                    },
+                ],
+            },
+            // Level 16 – Health
+            {
+                level: 16,
+                questions: [
+                    {
+                        prompt: '"سر" means:',
+                        options: ["Hand", "Head", "Leg", "Eye"],
+                        correctIndex: 1, // Head
+                    },
+                    {
+                        prompt: "Which word means fever?",
+                        options: ["درد", "ټوخی", "تبه", "زخم"],
+                        correctIndex: 2, // تبه
+                    },
+                ],
+            },
+            // Level 17 – Directions
+            {
+                level: 17,
+                questions: [
+                    {
+                        prompt: '"ښي" means:',
+                        options: ["Left", "Right", "Front", "Back"],
+                        correctIndex: 1, // Right
+                    },
+                    {
+                        prompt: "Which word means near?",
+                        options: ["لرې", "نږدې", "پورته", "ښکته"],
+                        correctIndex: 1, // نږدې
+                    },
+                ],
+            },
+            // Level 18 – Shopping
+            {
+                level: 18,
+                questions: [
+                    {
+                        prompt: '"قيمت" means:',
+                        options: ["Color", "Money", "Price", "Shop"],
+                        correctIndex: 2, // Price
+                    },
+                    {
+                        prompt: "Which word means cheap?",
+                        options: ["ګران", "ارزانه", "لوی", "وړوکی"],
+                        correctIndex: 1, // ارزانه
+                    },
+                ],
+            },
+            // Level 19 – Transport
+            {
+                level: 19,
+                questions: [
+                    {
+                        prompt: '"موټر" means:',
+                        options: ["Train", "Bus", "Car", "Bike"],
+                        correctIndex: 2, // Car
+                    },
+                    {
+                        prompt: "Which word means road?",
+                        options: ["سړک", "کور", "پل", "دروازه"],
+                        correctIndex: 0, // سړک
+                    },
+                ],
+            },
+            // Level 20 – Politeness
+            {
+                level: 20,
+                questions: [
+                    {
+                        prompt: '"مهرباني وکړئ" means:',
+                        options: ["Sorry", "Please", "Thanks", "Hello"],
+                        correctIndex: 1, // Please
+                    },
+                    {
+                        prompt: "Which word means thank you?",
+                        options: ["سلام", "بخښنه", "مننه", "خداى پامان"],
+                        correctIndex: 2, // مننه
+                    },
+                ],
+            },
+            // Level 21 – Past Tense
+            {
+                level: 21,
+                questions: [
+                    {
+                        prompt: '"ما وخوړه" means:',
+                        options: ["I will eat", "I eat", "I ate", "I am eating"],
+                        correctIndex: 2, // I ate
+                    },
+                    {
+                        prompt: "Which word shows past?",
+                        options: ["کوم", "کومه", "وکړل", "کوي"],
+                        correctIndex: 2, // وکړل
+                    },
+                ],
+            },
+            // Level 22 – Future Tense
+            {
+                level: 22,
+                questions: [
+                    {
+                        prompt: '"زه به ځم" means:',
+                        options: ["I went", "I go", "I will go", "I am going"],
+                        correctIndex: 2, // I will go
+                    },
+                    {
+                        prompt: "Which word indicates future?",
+                        options: ["وو", "به", "دی", "ووایم"],
+                        correctIndex: 1, // به
+                    },
+                ],
+            },
+            // Level 23 – Reasons
+            {
+                level: 23,
+                questions: [
+                    {
+                        prompt: '"ځکه چې" means:',
+                        options: ["But", "Because", "Although", "And"],
+                        correctIndex: 1, // Because
+                    },
+                    {
+                        prompt: "Choose the correct reason sentence:",
+                        options: [
+                            "زه خوشحاله يم ځکه چې بريالی شوم",
+                            "زه ځم بازار",
+                            "دا کتاب دی",
+                            "هوا ګرمه ده",
+                        ],
+                        correctIndex: 0,
+                    },
+                ],
+            },
+            // Level 24 – Comparisons
+            {
+                level: 24,
+                questions: [
+                    {
+                        prompt: '"لوی" means:',
+                        options: ["Small", "Big", "Fast", "New"],
+                        correctIndex: 1, // Big
+                    },
+                    {
+                        prompt: "Which word means better?",
+                        options: ["ښه", "بد", "ورو", "لرې"],
+                        correctIndex: 0, // ښه
+                    },
+                ],
+            },
+            // Level 25 – Describing People
+            {
+                level: 25,
+                questions: [
+                    {
+                        prompt: '"ښه سړی" means:',
+                        options: ["Bad man", "Old man", "Good man", "Tall man"],
+                        correctIndex: 2, // Good man
+                    },
+                    {
+                        prompt: "Which word means honest?",
+                        options: ["ريښتونی", "غوسه", "سست", "تيز"],
+                        correctIndex: 0, // ريښتونی
+                    },
+                ],
+            },
+            // Level 26 – House
+            {
+                level: 26,
+                questions: [
+                    {
+                        prompt: '"کوټه" means:',
+                        options: ["Door", "Roof", "Room", "Wall"],
+                        correctIndex: 2, // Room
+                    },
+                    {
+                        prompt: "Which word means kitchen?",
+                        options: ["تشناب", "پخلنځی", "کوټه", "دهلېز"],
+                        correctIndex: 1, // پخلنځی
+                    },
+                ],
+            },
+            // Level 27 – Technology
+            {
+                level: 27,
+                questions: [
+                    {
+                        prompt: '"موبايل" means:',
+                        options: ["TV", "Laptop", "Mobile phone", "Radio"],
+                        correctIndex: 2, // Mobile phone
+                    },
+                    {
+                        prompt: "Which word means internet?",
+                        options: ["برېښنا", "شبکه", "انټرنېټ", "کمپيوټر"],
+                        correctIndex: 2, // انټرنېټ
+                    },
+                ],
+            },
+            // Level 28 – Education
+            {
+                level: 28,
+                questions: [
+                    {
+                        prompt: '"ښوونکی" means:',
+                        options: ["Student", "Teacher", "Doctor", "Worker"],
+                        correctIndex: 1, // Teacher
+                    },
+                    {
+                        prompt: "Which word means exam?",
+                        options: ["سبق", "کتاب", "امتحان", "ښوونځی"],
+                        correctIndex: 2, // امتحان
+                    },
+                ],
+            },
+            // Level 29 – Work
+            {
+                level: 29,
+                questions: [
+                    {
+                        prompt: '"دفتر" means:',
+                        options: ["School", "Office", "Shop", "Home"],
+                        correctIndex: 1, // Office
+                    },
+                    {
+                        prompt: "Which word means job?",
+                        options: ["لوبه", "کار", "سفر", "درس"],
+                        correctIndex: 1, // کار
+                    },
+                ],
+            },
+            // Level 30 – Social Talk
+            {
+                level: 30,
+                questions: [
+                    {
+                        prompt: '"زه موافق يم" means:',
+                        options: ["I disagree", "I am angry", "I agree", "I refuse"],
+                        correctIndex: 2, // I agree
+                    },
+                    {
+                        prompt: "Which word means disagree?",
+                        options: ["موافق", "مخالف", "خوشحال", "غمجن"],
+                        correctIndex: 1, // مخالف
+                    },
+                ],
+            },
+            // Level 31 – Complex Sentences
+            {
+                level: 31,
+                questions: [
+                    {
+                        prompt: '"که څه هم" means:',
+                        options: ["Because", "Although", "And", "Therefore"],
+                        correctIndex: 1, // Although
+                    },
+                    {
+                        prompt: "Identify a complex sentence:",
+                        options: [
+                            "زه خوشحاله يم",
+                            "زه ځم",
+                            "که څه هم باران و، موږ ولاړو",
+                            "دا کتاب دی",
+                        ],
+                        correctIndex: 2,
+                    },
+                ],
+            },
+            // Level 32 – Passive Voice
+            {
+                level: 32,
+                questions: [
+                    {
+                        prompt: '"کار وشو" means:',
+                        options: [
+                            "I did work",
+                            "Work is done",
+                            "Work will be done",
+                            "Doing work",
+                        ],
+                        correctIndex: 1, // Work is done
+                    },
+                    {
+                        prompt: "Passive sentence is:",
+                        options: [
+                            "زه کتاب لولم",
+                            "کتاب ولوستل شو",
+                            "زه کتاب اخلم",
+                            "کتاب واخله",
+                        ],
+                        correctIndex: 1,
+                    },
+                ],
+            },
+            // Level 33 – Storytelling
+            {
+                level: 33,
+                questions: [
+                    {
+                        prompt: "Which word shows sequence?",
+                        options: ["ناڅاپه", "بيا", "ولې", "که"],
+                        correctIndex: 1, // بيا
+                    },
+                    {
+                        prompt: "Story sentences usually use:",
+                        options: ["Commands", "Questions", "Past tense", "Future tense"],
+                        correctIndex: 2, // Past tense
+                    },
+                ],
+            },
+            // Level 34 – Opinions
+            {
+                level: 34,
+                questions: [
+                    {
+                        prompt: '"زما په اند" means:',
+                        options: ["I think", "I know", "I see", "I hear"],
+                        correctIndex: 0, // I think
+                    },
+                    {
+                        prompt: "Opinion sentence is:",
+                        options: [
+                            "دا کتاب دی",
+                            "زما په اند دا ښه دی",
+                            "دروازه خلاصه ده",
+                            "زه ځم",
+                        ],
+                        correctIndex: 1,
+                    },
+                ],
+            },
+            // Level 35 – Idioms
+            {
+                level: 35,
+                questions: [
+                    {
+                        prompt: '"لاس پښې کېدل" means:',
+                        options: ["To help", "To panic", "To work", "To relax"],
+                        correctIndex: 1, // To panic
+                    },
+                    {
+                        prompt: "Idioms are:",
+                        options: ["Literal", "Formal", "Figurative", "Scientific"],
+                        correctIndex: 2, // Figurative
+                    },
+                ],
+            },
+            // Level 36 – Social Norms
+            {
+                level: 36,
+                questions: [
+                    {
+                        prompt: "Respect word for elders:",
+                        options: ["ته", "تاسو", "دی", "دا"],
+                        correctIndex: 1, // تاسو
+                    },
+                    {
+                        prompt: "Greeting elders shows:",
+                        options: ["Speed", "Respect", "Fear", "Anger"],
+                        correctIndex: 1, // Respect
+                    },
+                ],
+            },
+            // Level 37 – Culture
+            {
+                level: 37,
+                questions: [
+                    {
+                        prompt: '"جرګه" means:',
+                        options: ["Party", "Council", "School", "Shop"],
+                        correctIndex: 1, // Council
+                    },
+                    {
+                        prompt: "Which is a cultural event?",
+                        options: ["واده", "درس", "لوبه", "کار"],
+                        correctIndex: 0, // واده
+                    },
+                ],
+            },
+            // Level 38 – Emotions
+            {
+                level: 38,
+                questions: [
+                    {
+                        prompt: '"خوشحال" means:',
+                        options: ["Angry", "Sad", "Happy", "Tired"],
+                        correctIndex: 2, // Happy
+                    },
+                    {
+                        prompt: "Which word means sad?",
+                        options: ["غمجن", "قوي", "تيز", "ښکلی"],
+                        correctIndex: 0, // غمجن
+                    },
+                ],
+            },
+            // Level 39 – Conflict
+            {
+                level: 39,
+                questions: [
+                    {
+                        prompt: '"بخښنه غواړم" means:',
+                        options: ["Thank you", "Sorry", "Goodbye", "Welcome"],
+                        correctIndex: 1, // Sorry
+                    },
+                    {
+                        prompt: "Conflict resolution needs:",
+                        options: ["Anger", "Silence", "Apology", "Speed"],
+                        correctIndex: 2, // Apology
+                    },
+                ],
+            },
+            // Level 40 – Media
+            {
+                level: 40,
+                questions: [
+                    {
+                        prompt: '"خبر" means:',
+                        options: ["Story", "News", "Song", "Letter"],
+                        correctIndex: 1, // News
+                    },
+                    {
+                        prompt: "News is found in:",
+                        options: ["کتاب", "ورځپاڼه", "دفتر", "ښوونځی"],
+                        correctIndex: 1, // ورځپاڼه
+                    },
+                ],
+            },
+            // Level 41 – Formal Language
+            {
+                level: 41,
+                questions: [
+                    {
+                        prompt: "Formal word for request:",
+                        options: ["راکړه", "ورکړه", "مهرباني وکړئ", "راځه"],
+                        correctIndex: 2, // مهرباني وکړئ
+                    },
+                    {
+                        prompt: "Formal language is used in:",
+                        options: ["Friends", "Office", "Games", "Home"],
+                        correctIndex: 1, // Office
+                    },
+                ],
+            },
+            // Level 42 – Professional Talk
+            {
+                level: 42,
+                questions: [
+                    {
+                        prompt: '"غونډه" means:',
+                        options: ["Class", "Meeting", "Party", "Game"],
+                        correctIndex: 1, // Meeting
+                    },
+                    {
+                        prompt: "Workplace language should be:",
+                        options: ["Casual", "Polite", "Loud", "Funny"],
+                        correctIndex: 1, // Polite
+                    },
+                ],
+            },
+            // Level 43 – Academic Language
+            {
+                level: 43,
+                questions: [
+                    {
+                        prompt: '"تحقيق" means:',
+                        options: ["Test", "Research", "Homework", "Lesson"],
+                        correctIndex: 1, // Research
+                    },
+                    {
+                        prompt: "Academic language is:",
+                        options: ["Simple", "Emotional", "Formal", "Slang"],
+                        correctIndex: 2, // Formal
+                    },
+                ],
+            },
+            // Level 44 – Literature
+            {
+                level: 44,
+                questions: [
+                    {
+                        prompt: '"شعر" means:',
+                        options: ["Essay", "Poem", "Story", "News"],
+                        correctIndex: 1, // Poem
+                    },
+                    {
+                        prompt: "Poetry uses:",
+                        options: ["Numbers", "Emotion", "Orders", "Facts"],
+                        correctIndex: 1, // Emotion
+                    },
+                ],
+            },
+            // Level 45 – Dialects
+            {
+                level: 45,
+                questions: [
+                    {
+                        prompt: "Dialects are:",
+                        options: [
+                            "Same everywhere",
+                            "Regional variations",
+                            "Errors",
+                            "New languages",
+                        ],
+                        correctIndex: 1, // Regional variations
+                    },
+                    {
+                        prompt: "Standard Pashto is used in:",
+                        options: ["Education", "Slang", "Jokes", "Songs"],
+                        correctIndex: 0, // Education
+                    },
+                ],
+            },
+            // Level 46 – Proverbs
+            {
+                level: 46,
+                questions: [
+                    {
+                        prompt: "Proverbs teach:",
+                        options: ["Games", "Lessons", "Science", "Math"],
+                        correctIndex: 1, // Lessons
+                    },
+                    {
+                        prompt: "Proverbs are:",
+                        options: ["Long", "Short & wise", "Formal", "New"],
+                        correctIndex: 1, // Short & wise
+                    },
+                ],
+            },
+            // Level 47 – Society
+            {
+                level: 47,
+                questions: [
+                    {
+                        prompt: '"ټولنه" means:',
+                        options: ["Family", "Society", "Country", "Group"],
+                        correctIndex: 1, // Society
+                    },
+                    {
+                        prompt: "ټولنه is made of:",
+                        options: ["Buildings", "People", "Roads", "Laws"],
+                        correctIndex: 1, // People
+                    },
+                ],
+            },
+            // Level 48 – History
+            {
+                level: 48,
+                questions: [
+                    {
+                        prompt: '"تاريخ" means:',
+                        options: ["Story", "History", "Culture", "Future"],
+                        correctIndex: 1, // History
+                    },
+                    {
+                        prompt: "تاريخ helps us:",
+                        options: ["Sleep", "Learn lessons", "Forget", "Play"],
+                        correctIndex: 1, // Learn lessons
+                    },
+                ],
+            },
+            // Level 49 – Abstract Ideas
+            {
+                level: 49,
+                questions: [
+                    {
+                        prompt: '"ازادي" means:',
+                        options: ["Law", "Freedom", "Power", "Order"],
+                        correctIndex: 1, // Freedom
+                    },
+                    {
+                        prompt: "ازادي ideas are:",
+                        options: ["Visible", "Physical", "Conceptual", "Measurable"],
+                        correctIndex: 2, // Conceptual
+                    },
+                ],
+            },
+            // Level 50 – Real-Life Use
+            {
+                level: 50,
+                questions: [
+                    {
+                        prompt: "Best response to greeting:",
+                        options: ["مننه", "سلام", "بخښنه", "خداى پامان"],
+                        correctIndex: 1, // سلام
+                    },
+                    {
+                        prompt: "Correct conversation ending:",
+                        options: ["سلام", "مننه", "خداى پامان", "مهرباني يار"],
+                        correctIndex: 2, // خداى پامان
+                    },
+                ],
+            },
+        ];
+
+        // Build challenges and options for levels 12–50
+        const advancedChallenges: {
+            id: number;
+            lessonId: number;
+            type: typeof schema.challenges.$inferSelect["type"];
+            order: number;
+            question: string;
+        }[] = [];
+
+        const advancedChallengeOptions: {
+            challengeId: number;
+            text: string;
+            correct: boolean;
+            audioSrc: string;
+        }[] = [];
+
+        let nextChallengeId = 33; // continue after alphabet challenges (1–32)
+        const optionLetters = ["A", "B", "C", "D"];
+
+        for (const level of advancedLevels) {
+            level.questions.forEach((q, questionIndex) => {
+                const challengeId = nextChallengeId++;
+                advancedChallenges.push({
+                    id: challengeId,
+                    lessonId: level.level,
+                    type: "ASSIST",
+                    order: questionIndex + 1,
+                    question: q.prompt,
+                });
+
+                q.options.forEach((optText, optionIndex) => {
+                    const letter = optionLetters[optionIndex];
+                    const audioSrc = `/Q${level.level}-${questionIndex + 1}${letter}.m4a`;
+
+                    advancedChallengeOptions.push({
+                        challengeId,
+                        text: optText,
+                        correct: optionIndex === q.correctIndex,
+                        audioSrc,
+                    });
+                });
+            });
+        }
+
+        await db.insert(schema.challenges).values(advancedChallenges);
+        await db.insert(schema.challengeOptions).values(advancedChallengeOptions);
+
         console.log("Seeding finished successfully!");
-        console.log(`Created 11 lessons with 32 challenges and 128 challenge options`);
+        console.log(
+            `Created ${lessons.length + extraLessons.length} lessons with ${
+                32 + advancedChallenges.length
+            } challenges and ${
+                (32 * 4) + advancedChallengeOptions.length
+            } challenge options`,
+        );
 
     } catch (error) {
         console.error(error);
