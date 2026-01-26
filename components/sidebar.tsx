@@ -27,31 +27,52 @@ return(
                     </div>
                     </Link> 
                     <div className="flex flex-col gap-y-2 flex-1">
-                        <SidebarItem  label="Learn"
-                         iconSrc="/house.png"
-                          href="/learn"/>
-                          <SidebarItem  label="Leaderboard"
-                         iconSrc="/leaderboard.png"
-                          href="/leaderboard"/>
-                          <SidebarItem  label="Quests"
-                         iconSrc="/quests.png"
-                          href="/quests"/>
-                          <SidebarItem  label="Shop"
-                         iconSrc="/shop.png"
-                          href="/shop"/>
-                          <SidebarItem  label="Translation"
-                         iconSrc="/translation.png"
-                          href="/translation"/>
-                          <SidebarItem  label="Pronunciation"
-                         iconSrc="/pronunciation.png"
-                          href="/pronunciation"/>
-                          <SidebarItem  label="Phrasebook"
-                         iconSrc="/book.png"
-                          href="/phrasebook"/>
-                          <SidebarItem  label="Reading"
-                         iconSrc="/reading.png"
-                          href="/reading"/> 
-                        </div>       
+                        <SidebarItem
+                          label="Learn"
+                          iconSrc="/house.png"
+                          href="/learn"
+                        />
+                        <SidebarItem
+                          label="Leaderboard"
+                          iconSrc="/leaderboard.png"
+                          href="/leaderboard"
+                        />
+                        <SidebarItem
+                          label="Quests"
+                          iconSrc="/quests.png"
+                          href="/quests"
+                        />
+                        <SidebarItem
+                          label="Shop"
+                          iconSrc="/shop.png"
+                          href="/shop"
+                        />
+                        <SidebarItem
+                          label="Translation"
+                          iconSrc="/translation.png"
+                          href="/translation"
+                        />
+                        <SidebarItem
+                          label="Pronunciation"
+                          iconSrc="/pronunciation.png"
+                          href="/pronunciation"
+                        />
+                        <SidebarItem
+                          label="Assessment"
+                          iconSrc="/flamingo_logo_bg.png"
+                          href="/test"
+                        />
+                        <SidebarItem
+                          label="Phrasebook"
+                          iconSrc="/book.png"
+                          href="/phrasebook"
+                        />
+                        <SidebarItem
+                          label="Reading"
+                          iconSrc="/reading.png"
+                          href="/reading"
+                        />
+                    </div>       
                         <div className="p-4 ">
                              {/* Admin button pinned above profile */}
                              <div className="mb-3">
